@@ -1,0 +1,1 @@
+{"virtualbox":{"/vagrant":{"owner":"vagrant","group":"apache","mount_options":["dmode=777","fmode=777"],"guestpath":"/vagrant","hostpath":"/Users/sugiharanaoki/Documents/vagrant/sakura-server","disabled":false}}}
