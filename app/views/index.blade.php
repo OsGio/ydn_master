@@ -200,7 +200,7 @@
 						<div class="form-group">
 							<div class="col-sm-12">
 								<textarea id="result" class="form-control" rows="8" name="keyword" required=""></textarea>
-								<span class="help-block">キーワード数：<span class="count">0</span></span>
+								<span class="help-block">キーワード数：<span class="count">0</span>{{Form::hidden('keyword_count', '')}}</span>
 							</div>
 						</div>
 					</fieldset>

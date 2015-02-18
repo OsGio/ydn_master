@@ -15,6 +15,10 @@ class FunctionController extends BaseController {
 	|
 	*/
 
+	public $csv_header = array('キャンペーン名','広告グループ名','コンポーネントの種類','配信設定','配信状況','マッチタイプ','キーワード','カスタムURL','入札価格',
+								'広告名','タイトル','説明文1','説明文2','表示URL','リンク先URL','キャンペーン予算（日額）','キャンペーン開始日',
+								'デバイス','配信先','スマートフォン入札価格調整率（%）','広告タイプ','キャリア','優先デバイス','キャンペーンID','広告グループID','キーワードID','広告ID','エラーメッセージ');
+
 	/** Postデータ
 	* @param ( str )campaign_name キャンペーン名
 	* @param ( str )campaign_budget キャンペーン予算
@@ -41,13 +45,13 @@ class FunctionController extends BaseController {
 		$posts = $_POST;
 
 $Cam = App::make('campaign');
-$err = $Cam->selfCheck();
-var_dump($err);exit;
+//$err = $Cam->selfCheck();
 
 $Ad = App::make('adgroup');
-$err = $Ad->selfCheck();
+//$err = $Ad->selfCheck();
 
 
+var_dump($posts);exit;
 
 
 
@@ -59,8 +63,6 @@ $err = $Ad->selfCheck();
 		extract($posts);
 		$keyword = str_replace(array("\r\n", "\r", "\n"), ' ', $keyword);
 //var_dump($keyword);exit;
-		$csv_header = array('キャンペーン名','広告グループ名','コンポーネントの種類','配信設定','配信状況','マッチタイプ','キーワード','カスタムURL','入札価格','広告名','タイトル','説明文1','説明文2','表示URL','リンク先URL','キャンペーン予算（日額）','キャンペーン開始日',
-							'デバイス','配信先','スマートフォン入札価格調整率（%）','広告タイプ','キャリア','優先デバイス','キャンペーンID','広告グループID','キーワードID','広告ID','エラーメッセージ');
 		$csv_compo_camp = array($campaign_name,null,'キャンペーン','オン',null,null,null,null,null,null,null,null,null,null,null,$campaign_budget,null,'PC|モバイル|スマートフォン|タブレット','すべて',0,null,null,null,null,null,null,null,null);
 		$csv_compo_adgroup = array($campaign_name,$keyword."($match_type[0])",'広告グループ','オン',null,null,null,null,$ad_group_cost,null,null,null,null,null,null,null,null,'PC|モバイル|スマートフォン|タブレット',null,null,null,null,null,null,null,null,null,null);
 		$csv_compo_ads = array($campaign_name,$keyword."($match_type[0])",'広告','オン',null,null,null,null,null,$ad_ads_name,$ad_ads_title,$ad_ads_note01,$ad_ads_note02,$ad_ads_display_url,$ad_ads_link_url,null,null,'PC|モバイル|スマートフォン|タブレット',null,null,'テキスト（15・19-19）',null,null,null,null,null,null,null);

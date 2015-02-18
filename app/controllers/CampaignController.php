@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\MyTraits\CampaignTrait;
+//use Illuminate\MyTraits\CampaignTrait;
 
 class CampaignController extends BaseController{
 
-    use CampaignTrait;
+//    use CampaignTrait;
 
     /*
     |--------------------------------------------------------------------------
