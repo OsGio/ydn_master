@@ -208,7 +208,7 @@
 					<fieldset class="form-horizontal col-sm-5">
 						<div class="form-group">
 							<div class="col-sm-12">
-								<textarea id="encode" class="form-control" rows="8" name="url_encode" required=""></textarea>
+								<textarea id="encode" class="form-control" rows="8" name="ad_ads_link_url" required=""></textarea>
 								<span class="help-block">キーワード数：<span class="count">0</span></span>	<span class="btn btn-sm btn-warning encode_btn" data-role="encode">URLエンコード</span>
 							</div>
 						</div>

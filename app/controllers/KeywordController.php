@@ -75,7 +75,7 @@ class KeywordController extends BaseController {
     private $ad_ads_id = null;
     private $err_msg = null;
 
-    private $must = ['campaign_name', 'ad_group_name', 'match_type', 'keywords', 'ad_group_cost'];
+    private $must = ['campaign_name', 'ad_group_name', 'match_type', 'keywords', 'ad_group_cost', 'ad_ads_link_url']; //ad_ads_link_urlは自身の必須項目ではないが子要素のため必要
     private $core = ['keywords', 'ad_group_name'];
 
     public $count_keywords;
@@ -112,6 +112,7 @@ class KeywordController extends BaseController {
                 $clone = clone $this;
                 $clone->keywords = $this->keywords[$i];
                 $clone->ad_group_name = $this->ad_group_name[$i];
+                $clone->AdAds->setLinkUrl($this->ad_ads_link_url[$i]); //AdAdsのmustであるad_ads_link_urlを挿入
 
                 $clones[] = $clone;
             }
@@ -139,18 +140,29 @@ class KeywordController extends BaseController {
 
     //クラス専用キャスト関数
     protected function castKeywords($posts){
-        $keywords = explode("\n", $posts['keyword']);
+        extract($posts);
+        switch($match_type[0]){
+            case "exact":
+                $this->match_type = "完全一致";break;
+            case "phrase":
+                $this->match_type = "フレーズ一致";break;
+            case "broad_plus":
+                $this->match_type = "絞り込み部分一致";break;
+            case "broad":
+                $this->match_type = "部分一致";break;
+        }
+        $keywords = explode("\n", $keyword);
         $this->count_keywords = count($keywords);
         $this->keywords = $keywords;
-        $url = explode("\n", $posts['url_encode']);
-        $this->AdAds->setLinkUrl($url);
+        $url = explode("\n", $ad_ads_link_url);
+        $this->ad_ads_link_url = $url;
         self::makeAdGroupName($keywords);
         return $keywords;
     }
     //近似しているグループネームをここで作成
     protected function makeAdGroupName($keywords){
         foreach($keywords as $k){
-            $ad_group_name[] = $k. '($match_type)';
+            $ad_group_name[] = $k. '('. $this->match_type .')';
         }
         $this->ad_group_name = $ad_group_name;
         $this->AdGroup->setAdGroupName($ad_group_name);

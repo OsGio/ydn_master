@@ -56,22 +56,20 @@ class FunctionController extends BaseController {
 // var_dump($Key);exit;
 //
 
+
 $Key = App::make('keyword');
 $Key->setVal($posts);
 $err_key = $Key->selfCheck();
-// var_dump($Key);
 $clones_key = $Key->setClone();
-//var_dump($clones);
+var_dump($clones_key);
 
 $Key->AdAds->setval($posts);
 $err_adads = $Key->AdAds->selfCheck();
-//var_dump($err_adads);
 $clones_adads = $Key->AdAds->setClone();
-//var_dump($clones);
+var_dump($clones_adads);
 
 $Key->AdGroup->setVal($posts);
 $err_adgroup = $Key->AdGroup->selfCheck();
-//var_dump($err_adgroup);
 $clones_adgroup = $Key->AdGroup->setClone();
 var_dump($clones_adgroup);
 exit;
