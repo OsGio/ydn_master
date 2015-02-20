@@ -2,6 +2,8 @@
 
 class FunctionController extends BaseController {
 
+	public $layout = "layouts.master";
+
 	/*
 	|--------------------------------------------------------------------------
 	| Default Home Controller
@@ -61,28 +63,30 @@ $Key = App::make('keyword');
 $Key->setVal($posts);
 $err_key = $Key->selfCheck();
 $clones_key = $Key->setClone();
-var_dump($clones_key);
+// var_dump($clones_key);
 
 $Key->AdAds->setval($posts);
 $err_adads = $Key->AdAds->selfCheck();
 $clones_adads = $Key->AdAds->setClone();
-var_dump($clones_adads);
+// var_dump($clones_adads);
 
 $Key->AdGroup->setVal($posts);
 $err_adgroup = $Key->AdGroup->selfCheck();
 $clones_adgroup = $Key->AdGroup->setClone();
-var_dump($clones_adgroup);
-exit;
+// var_dump($clones_adgroup);
 
 $Cam = App::make('campaign');
 $Cam->setVal($posts);
 $err_cam = $Cam->selfCheck();
-var_dump($clones);
 
-var_dump($err_cam);
-
+$Campaign = $Cam->makeCampaign($clones_adads, $clones_key, $clones_adgroup);
 
 
+return View::make('preview', array('Cam' => $Campaign, 'header' => $this->csv_header));
+
+var_dump($Cam);
+
+exit;
 
 $error = $Key->AdAds->selfCheck();
 

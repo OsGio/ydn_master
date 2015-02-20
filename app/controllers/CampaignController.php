@@ -4,6 +4,8 @@
 
 class CampaignController extends BaseController{
 
+	public $layout = "layouts.master";
+
     /*
     |--------------------------------------------------------------------------
     | Default Home Controller
@@ -97,9 +99,12 @@ class CampaignController extends BaseController{
     }
 
     public function makeCampaign($AdAds, $Keyword, $AdGroup){
-        $this->AdAds = $AdAds;
-        $this->Keyword = $Keyword;
-        $this->AdGroup = $AdGroup;
+        if(!self::selfCheck()){
+            $this->AdAds = $AdAds;
+            $this->Keyword = $Keyword;
+            $this->AdGroup = $AdGroup;
+            return $this;
+        }
     }
 
     public function selfCheck(){
