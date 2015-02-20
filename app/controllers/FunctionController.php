@@ -60,20 +60,21 @@ $Key = App::make('keyword');
 $Key->setVal($posts);
 $err_key = $Key->selfCheck();
 // var_dump($Key);
-$clones = $Key->setClone();
+$clones_key = $Key->setClone();
 //var_dump($clones);
 
 $Key->AdAds->setval($posts);
 $err_adads = $Key->AdAds->selfCheck();
 //var_dump($err_adads);
-$clones = $Key->AdAds->setClone();
-var_dump($clones);
-exit;
+$clones_adads = $Key->AdAds->setClone();
+//var_dump($clones);
 
 $Key->AdGroup->setVal($posts);
 $err_adgroup = $Key->AdGroup->selfCheck();
-var_dump($err_adgroup);
-var_dump($clones);
+//var_dump($err_adgroup);
+$clones_adgroup = $Key->AdGroup->setClone();
+var_dump($clones_adgroup);
+exit;
 
 $Cam = App::make('campaign');
 $Cam->setVal($posts);

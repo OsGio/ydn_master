@@ -76,6 +76,9 @@ class AdGroupController extends BaseController {
     private $err_msg = null;
 
     private $must = ['campaign_name', 'ad_group_name', 'ad_group_cost'];
+    private $core = ['ad_group_name'];
+
+    public $count_ad_group_name;
 
 
     /**
@@ -95,7 +98,21 @@ class AdGroupController extends BaseController {
         }
     }
 
+    //セルフチェックをして何もなかったらクローンに分割
+    public function setClone(){
+        if(!self::selfCheck()){
+            for($i=0; $i<$this->count_ad_group_name; $i++){
+                $clone = clone $this;
+                $clone->ad_group_name = $this->ad_group_name[$i];
+                $clones[] = $clone;
+            }
+        return $clones;
+        }
+        return null;
+    }
+
     public function setAdGroupName($ad_group_name){
+        $this->count_ad_group_name = count($ad_group_name);
         $this->ad_group_name = $ad_group_name;
     }
 
