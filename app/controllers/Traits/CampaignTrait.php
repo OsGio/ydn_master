@@ -1,4 +1,4 @@
-<?php namespace Illuminate\MyTraits;
+<?php namespace app\controllers\Traits;
 
 trait Campaign {
 
@@ -9,7 +9,7 @@ trait Campaign {
 	/**
 	 * 必須項目チェック.
 	 * @param ( arr )must 必須パラメーター
-	 * @return ?( arr )ParamName : null
+	 * @return mixed
 	 */
 	public function selfCheck(){
 		foreach($this->must as $m)
@@ -33,7 +33,7 @@ trait Campaign {
 	public function setParam($posts){
 		foreach($this->must as $m)
 		{
-			if($posts[$m])$this->$m = $posts[$m];
+			if($posts[$m]):$this->$m = $posts[$m];
 		}
 	}
 

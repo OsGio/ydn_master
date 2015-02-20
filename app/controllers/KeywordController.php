@@ -1,6 +1,6 @@
 <?php
 
-class KeywordController extends CampaignController {
+class KeywordController extends BaseController {
 
     /*
     |--------------------------------------------------------------------------
@@ -29,8 +29,8 @@ class KeywordController extends CampaignController {
     * @param $ad_ads_title 広告タイトル
     * @param $ad_ads_note01 説明文１
     * @param $ad_ads_note02 説明文２
-    * @param $display_url 表示URL
-    * @param $link_url リンク先URL
+    * @param $ad_ads_display_url 表示URL
+    * @param $ad_ads_link_url リンク先URL
     * @param $campaign_budget キャンペーン予算（日額）
     * @param $start_day キャンペーン開始日
     * @param $device_type デバイス
@@ -59,8 +59,8 @@ class KeywordController extends CampaignController {
     private $ad_ads_title = null;
     private $ad_ads_note01 = null;
     private $ad_ads_note02 = null;
-    private $display_url = null;
-    private $link_url = null;
+    private $ad_ads_display_url = null;
+    private $ad_ads_link_url = null;
     private $campaign_budget = null;
     private $start_day = null;
     private $device_type = "PC|モバイル|スマートフォン";
@@ -76,16 +76,49 @@ class KeywordController extends CampaignController {
     private $err_msg = null;
 
     private $must = ['campaign_name', 'ad_group_name', 'match_type', 'keywords', 'ad_group_cost'];
+    private $core = ['keywords', 'ad_group_name'];
+
+    public $count_keywords;
+
+    public $AdAds;
 
     /**
     * @param campaign_name キャンペーン名
     *
     */
 
+    //AdAdsコントローラーを生成
     public function __construct(){
+        $this->AdAds = App::make('adads');
         return $this;
     }
 
+    //オリジナルのキャスト関数を呼び出し必要な値をセット
+    public function setVal($posts){
+        self::castKeywords($posts);
+        foreach($posts as $key => $val){
+            if(in_array($key, $this->must)){
+                $this->$key = $val;
+            }
+        }
+    }
+
+    //セルフチェックをして何もなかったらクローンに分割
+    public function setClone(){
+        if(!self::selfCheck()){
+            for($i=0; $i<$this->count_keywords; $i++){
+                $clone = clone $this;
+                $clone->keywords = $this->keywords[$i];
+                $clone->ad_group_name = $this->ad_group_name[$i];
+
+                $clones[] = $clone;
+            }
+        return $clones;
+        }
+        return null;
+    }
+
+    //自己必須項目チェック
     public function selfCheck(){
         foreach($this->must as $m)
         {
@@ -93,13 +126,32 @@ class KeywordController extends CampaignController {
                 array($m => $this->$m),
                 array($m => 'required')
             );
-
             if($validator->fails())
             {
                 $miss[] = $m;
             }
         }
-        if($miss)return $miss;
+        return (isset($miss)) ? $miss : null;
+    }
+
+
+    //クラス専用キャスト関数
+    protected function castKeywords($posts){
+        $keywords = explode("\n", $posts['keyword']);
+        $this->count_keywords = count($keywords);
+        $this->keywords = $keywords;
+        $url = explode("\n", $posts['url_encode']);
+        $this->AdAds->setLinkUrl($url);
+        self::makeAdGroupName($keywords);
+        return $keywords;
+    }
+    //近似しているグループネームをここで作成
+    protected function makeAdGroupName($keywords){
+        foreach($keywords as $k){
+            $ad_group_name[] = $k. '($match_type)';
+        }
+        $this->ad_group_name = $ad_group_name;
+        $this->AdAds->setAdGroupName($ad_group_name);
     }
 
 

@@ -1,6 +1,6 @@
 <?php
 
-class AdAdsController extends CampaignController {
+class AdAdsController extends BaseController {
 
     /*
     |--------------------------------------------------------------------------
@@ -29,8 +29,8 @@ class AdAdsController extends CampaignController {
     * @param $ad_ads_title 広告タイトル
     * @param $ad_ads_note01 説明文１
     * @param $ad_ads_note02 説明文２
-    * @param $display_url 表示URL
-    * @param $link_url リンク先URL
+    * @param $ad_ads_display_url 表示URL
+    * @param $ad_ads_link_url リンク先URL
     * @param $campaign_budget キャンペーン予算（日額）
     * @param $start_day キャンペーン開始日
     * @param $device_type デバイス
@@ -59,8 +59,8 @@ class AdAdsController extends CampaignController {
     private $ad_ads_title;
     private $ad_ads_note01;
     private $ad_ads_note02;
-    private $display_url;
-    private $link_url;
+    private $ad_ads_display_url;
+    private $ad_ads_link_url;
     private $campaign_budget = null;
     private $start_day = null;
     private $device_type = "PC|モバイル|スマートフォン";
@@ -75,7 +75,12 @@ class AdAdsController extends CampaignController {
     private $ad_ads_id = null;
     private $err_msg = null;
 
-    private $must = ['campaign_name', 'ad_group_name', 'ad_ads_name', 'ad_ads_title', 'ad_ads_note01', 'ad_ads_note02', 'display_url', 'link_url'];
+    private $must = ['campaign_name', 'ad_group_name', 'ad_ads_name', 'ad_ads_title', 'ad_ads_note01', 'ad_ads_note02', 'ad_ads_display_url', 'ad_ads_link_url'];
+    private $core = ['ad_ads_title'];
+
+    public $count_ad_adds_title;
+    public $ad_ads_title_word;
+    public $ad_ads_title_phrase;
 
 
     /**
@@ -87,6 +92,31 @@ class AdAdsController extends CampaignController {
         return $this;
     }
 
+    //オリジナルのキャスト関数を呼び出し必要な値をセット
+    public function setVal($posts){
+        self::castAds($posts);
+        foreach($posts as $key => $val){
+            if(in_array($key, $this->must)){
+                $this->$key = $val;
+            }
+        }
+        // self::castAdAdsTitle($posts);
+    }
+
+    public function setClone(){
+        if(!self::selfCheck()){
+            for($i=0; $i<$this->count_ad_ads_title; $i++){
+                $clone = clone $this;
+                $clone->keywords = $this->keywords[$i];
+                $clone->ad_group_name = $this->ad_group_name[$i];
+
+                $clones[] = $clone;
+            }
+        return $clones;
+        }
+        return null;
+    }
+
     public function selfCheck(){
         foreach($this->must as $m)
         {
@@ -94,14 +124,42 @@ class AdAdsController extends CampaignController {
                 array($m => $this->$m),
                 array($m => 'required')
             );
-
             if($validator->fails())
             {
                 $miss[] = $m;
             }
         }
-        if($miss)return $miss;
+        return (isset($miss)) ? $miss : null;
     }
 
+    //専用キャストクラス
+    protected function castAds($posts){
+        extract($posts);
+        $this->ad_ads_title_word = $ad_ads_title_word;
+        $this->count_ad_ads_title = count($ad_ads_title);
+        foreach($ad_ads_title as $t){
+            if(isset($ad_ads_name)||isset($ad_ads_note01)||isset($ad_ads_note02)){
+                preg_replace('/^.*\{\{WORDS\}\}.*$/', $t, $this->ad_ads_title);
+                preg_replace('/^.*\{\{WORDS\}\}.*$/', $t, $this->ad_ads_note01);
+                preg_replace('/^.*\{\{WORDS\}\}.*$/', $t, $this->ad_ads_note02);
+            }
+        }
+        return $ad_ads_title;
+    }
+
+    protected function makeAdGroupName($keywords){
+        foreach($keywords as $k){
+            $ad_group_name[] = $k. '($match_type)';
+        }
+        $this->ad_group_name = $ad_group_name;
+    }
+
+    public function setLinkUrl($url){
+        $this->ad_ads_link_url = $url;
+    }
+
+    public function setAdGroupName($ad_group_name){
+        $this->ad_group_name = $ad_group_name;
+    }
 
 }

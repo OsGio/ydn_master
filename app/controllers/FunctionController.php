@@ -15,10 +15,6 @@ class FunctionController extends BaseController {
 	|
 	*/
 
-	public $csv_header = array('キャンペーン名','広告グループ名','コンポーネントの種類','配信設定','配信状況','マッチタイプ','キーワード','カスタムURL','入札価格',
-								'広告名','タイトル','説明文1','説明文2','表示URL','リンク先URL','キャンペーン予算（日額）','キャンペーン開始日',
-								'デバイス','配信先','スマートフォン入札価格調整率（%）','広告タイプ','キャリア','優先デバイス','キャンペーンID','広告グループID','キーワードID','広告ID','エラーメッセージ');
-
 	/** Postデータ
 	* @param ( str )campaign_name キャンペーン名
 	* @param ( str )campaign_budget キャンペーン予算
@@ -40,19 +36,41 @@ class FunctionController extends BaseController {
 	* @param ( str )ad_ads_link_url リンクURL
 	* @param ( str )ad_ads_listing_type リスティングタイプ
 	*/
+
+	public $csv_header = array('キャンペーン名','広告グループ名','コンポーネントの種類','配信設定','配信状況','マッチタイプ','キーワード','カスタムURL',
+								'入札価格','広告名','タイトル','説明文1','説明文2','表示URL','リンク先URL','キャンペーン予算（日額）','キャンペーン開始日',
+								'デバイス','配信先','スマートフォン入札価格調整率（%）','広告タイプ','キャリア','優先デバイス',
+								'キャンペーンID','広告グループID','キーワードID','広告ID','エラーメッセージ');
+
+
 	public function postIndex()
 	{
 		$posts = $_POST;
 
-$Cam = App::make('campaign');
-//$err = $Cam->selfCheck();
+//var_dump($posts);exit;
+// $Cam = App::make('campaign');
+// $err = $Cam->selfCheck();
+//
+// $Key = new KeywordController;
+// $Key = App::make('keyword');
+// var_dump($Key);exit;
+//
 
-$Ad = App::make('adgroup');
-//$err = $Ad->selfCheck();
+$Key = App::make('keyword');
+$Key->setVal($posts);
+$Key->AdAds->setval($posts);
+$err = $Key->AdAds->selfCheck();
+$err = $Key->selfCheck();
+// $AdAds = App::make('adads');
+// $AdAds->setVal($posts);
+// $error = $AdAds->selfCheck();
+
+var_dump($Key->AdAds->selfCheck());exit;
 
 
-var_dump($posts);exit;
+$error = $Key->AdAds->selfCheck();
 
+$result = $Key->setClone();
 
 
 

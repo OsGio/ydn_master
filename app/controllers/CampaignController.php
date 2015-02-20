@@ -1,10 +1,8 @@
 <?php
 
-//use Illuminate\MyTraits\CampaignTrait;
+//use app\controllers\Traits\CampaignTrait;
 
 class CampaignController extends BaseController{
-
-//    use CampaignTrait;
 
     /*
     |--------------------------------------------------------------------------
@@ -33,8 +31,8 @@ class CampaignController extends BaseController{
     * @param $ad_ads_title 広告タイトル
     * @param $ad_ads_note01 説明文１
     * @param $ad_ads_note02 説明文２
-    * @param $display_url 表示URL
-    * @param $link_url リンク先URL
+    * @param $ad_ads_display_url 表示URL
+    * @param $ad_ads_link_url リンク先URL
     * @param $campaign_budget キャンペーン予算（日額）
     * @param $start_day キャンペーン開始日
     * @param $device_type デバイス
@@ -63,8 +61,8 @@ class CampaignController extends BaseController{
     private $ad_ads_title = null;
     private $ad_ads_note01 = null;
     private $ad_ads_note02 = null;
-    private $display_url = null;
-    private $link_url = null;
+    private $ad_ads_display_url = null;
+    private $ad_ads_link_url = null;
     private $campaign_budget;
     private $start_day = null;
     private $device_type = "PC|モバイル|スマートフォン";
@@ -81,8 +79,13 @@ class CampaignController extends BaseController{
 
     private $must = ['campaign_name', 'campaign_budget'];
 
+    public $AdGroup;
+    public $Keyword;
+
 
     public function __construct(){
+        $AdGroup = App::make('adgroup');
+        $Keyword = App::make('keyword');
         return $this;
     }
 

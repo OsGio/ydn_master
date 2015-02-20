@@ -29,8 +29,8 @@ class AdGroupController extends CampaignController {
     * @param $ad_ads_title 広告タイトル
     * @param $ad_ads_note01 説明文１
     * @param $ad_ads_note02 説明文２
-    * @param $display_url 表示URL
-    * @param $link_url リンク先URL
+    * @param $ad_ads_display_url 表示URL
+    * @param $ad_ads_link_url リンク先URL
     * @param $campaign_budget キャンペーン予算（日額）
     * @param $start_day キャンペーン開始日
     * @param $device_type デバイス
@@ -59,8 +59,8 @@ class AdGroupController extends CampaignController {
     private $ad_ads_title = null;
     private $ad_ads_note01 = null;
     private $ad_ads_note02 = null;
-    private $display_url = null;
-    private $link_url = null;
+    private $ad_ads_display_url = null;
+    private $ad_ads_link_url = null;
     private $campaign_budget = null;
     private $start_day = null;
     private $device_type = "PC|モバイル|スマートフォン";
