@@ -21,7 +21,7 @@ ini_set('display_errors', 1);
 |
 */
 
-require __DIR__.'/../ydn/bootstrap/autoload.php';
+require __DIR__.'/../bootstrap/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +35,7 @@ require __DIR__.'/../ydn/bootstrap/autoload.php';
 |
 */
 
-$app = require_once __DIR__.'/../ydn/bootstrap/start.php';
+$app = require_once __DIR__.'/../bootstrap/start.php';
 
 /*
 |--------------------------------------------------------------------------

@@ -1,48 +1,34 @@
-    1  yum install -y httpd
-    2  yum search php*5.4*
-    3  yum -y install httpd
-    4  chkconfig httpd on
-    5  ls
-    6  php -v
-    7  rpm -ivh  http://ftp-srv2.kddilabs.jp/Linux/distributions/fedora/epel/5/x86_64/epel-release-5-4.noarch.rpm
-    8  rpm -ivh http://rpms.famillecollet.com/enterprise/remi-release-5.rpm
-    9  history
-   10  history > command.txt
-   11  ls
-   12  cat command.txt 
-   13  yum install php --enablerepo=remi
-   14  php -v
-   15  history > command.txt 
-   16  ls
-   17  cat command.txt 
-   18  pwd
-   19  cd /vagrant
-   20  ls
-   21  rm -rf /var/www/html
-   22  ln -fs /vagrant /var/www/html
-   23  cd /home/vagrant/
-   24  ls
-   25  history > command.txt 
-   26  mv ./command.txt /var/www/html
-   27  ls
-   28  cd /var/www/html
-   29  ls
-   30  locale
-   31  locale -a | grep -i ja
-   32  date
-   33  locale -a
-   34  sudo yum -y groupinstall "Japanese Support"
-   35  locale -a
-   36  localedef -f EUC-JP -i ja_JP ja_JP.eucjp
-   37  locale -a
-   38  vi /etc/sysconfig/i18n 
-   39  history > command.txt 
-   40  reboot
-   41  vi /etc/sysconfig/i18n 
-   42  /etc/sysconfig/i18n
-   43  ./etc/sysconfig/i18n
-   44  reboot
-   45  service iptables stop
-   46  chkconfig iptables off
-   47  ls
-   48  history > command.txt 
+yum install -y httpd
+yum search php*5.4*
+yum -y install httpd
+chkconfig httpd on
+php -v
+rpm -ivh  http://ftp-srv2.kddilabs.jp/Linux/distributions/fedora/epel/5/x86_64/epel-release-5-4.noarch.rpm
+rpm -ivh http://rpms.famillecollet.com/enterprise/remi-release-5.rpm
+yum install php php-mcrypt --enablerepo=remi
+php -v
+cd /vagrant
+rm -rf /var/www/html
+ln -fs /vagrant /var/www/html
+cd /home/vagrant/
+cd /var/www/html
+ls
+locale
+locale -a | grep -i ja
+date
+locale -a
+sudo yum -y groupinstall "Japanese Support"
+locale -a
+localedef -f EUC-JP -i ja_JP ja_JP.eucjp
+locale -a
+vi /etc/sysconfig/i18n
+history > command.txt
+reboot
+vi /etc/sysconfig/i18n
+/etc/sysconfig/i18n
+./etc/sysconfig/i18n
+reboot
+service iptables stop
+chkconfig iptables off
+ls
+history > command.txt
