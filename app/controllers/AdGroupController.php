@@ -1,6 +1,6 @@
 <?php
 
-class AdGroupController extends CampaignController {
+class AdGroupController extends BaseController {
 
     /*
     |--------------------------------------------------------------------------
@@ -87,6 +87,18 @@ class AdGroupController extends CampaignController {
         return $this;
     }
 
+    public function setVal($posts){
+        foreach($posts as $key => $val){
+            if(in_array($key, $this->must)){
+                $this->$key = $val;
+            }
+        }
+    }
+
+    public function setAdGroupName($ad_group_name){
+        $this->ad_group_name = $ad_group_name;
+    }
+
     public function selfCheck(){
         foreach($this->must as $m)
         {
@@ -100,7 +112,7 @@ class AdGroupController extends CampaignController {
                 $miss[] = $m;
             }
         }
-        if($miss)return $miss;
+        return (isset($miss)) ? $miss : null;
     }
 
 

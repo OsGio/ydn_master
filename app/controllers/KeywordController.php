@@ -81,6 +81,7 @@ class KeywordController extends BaseController {
     public $count_keywords;
 
     public $AdAds;
+    public $AdGroup;
 
     /**
     * @param campaign_name キャンペーン名
@@ -90,6 +91,7 @@ class KeywordController extends BaseController {
     //AdAdsコントローラーを生成
     public function __construct(){
         $this->AdAds = App::make('adads');
+        $this->AdGroup = App::make('adgroup');
         return $this;
     }
 
@@ -151,6 +153,7 @@ class KeywordController extends BaseController {
             $ad_group_name[] = $k. '($match_type)';
         }
         $this->ad_group_name = $ad_group_name;
+        $this->AdGroup->setAdGroupName($ad_group_name);
         $this->AdAds->setAdGroupName($ad_group_name);
     }
 

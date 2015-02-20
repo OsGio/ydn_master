@@ -81,14 +81,42 @@ class CampaignController extends BaseController{
 
     public $AdGroup;
     public $Keyword;
+    public $AdAds;
 
 
     public function __construct(){
-        $AdGroup = App::make('adgroup');
-        $Keyword = App::make('keyword');
         return $this;
     }
 
+    public function setVal($posts){
+        foreach($posts as $key => $val){
+            if(in_array($key, $this->must)){
+                $this->$key = $val;
+            }
+        }
+    }
+
+    public function makeCampaign($AdAds, $Keyword, $AdGroup){
+        $this->AdAds = $AdAds;
+        $this->Keyword = $Keyword;
+        $this->AdGroup = $AdGroup;
+    }
+
+    public function selfCheck(){
+        foreach($this->must as $m)
+        {
+            $validator = Validator::make(
+                array($m => $this->$m),
+                array($m => 'required')
+            );
+
+            if($validator->fails())
+            {
+                $miss[] = $m;
+            }
+        }
+        return (isset($miss)) ? $miss : null;
+    }
 
 
     /**

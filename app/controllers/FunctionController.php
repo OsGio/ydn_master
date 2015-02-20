@@ -58,21 +58,36 @@ class FunctionController extends BaseController {
 
 $Key = App::make('keyword');
 $Key->setVal($posts);
-$Key->AdAds->setval($posts);
-$err = $Key->AdAds->selfCheck();
-$err = $Key->selfCheck();
-// $AdAds = App::make('adads');
-// $AdAds->setVal($posts);
-// $error = $AdAds->selfCheck();
+$err_key = $Key->selfCheck();
+// var_dump($Key);
+$clones = $Key->setClone();
+//var_dump($clones);
 
-var_dump($Key->AdAds->selfCheck());exit;
+$Key->AdAds->setval($posts);
+$err_adads = $Key->AdAds->selfCheck();
+//var_dump($err_adads);
+$clones = $Key->AdAds->setClone();
+var_dump($clones);
+exit;
+
+$Key->AdGroup->setVal($posts);
+$err_adgroup = $Key->AdGroup->selfCheck();
+var_dump($err_adgroup);
+var_dump($clones);
+
+$Cam = App::make('campaign');
+$Cam->setVal($posts);
+$err_cam = $Cam->selfCheck();
+var_dump($clones);
+
+var_dump($err_cam);
+
+
 
 
 $error = $Key->AdAds->selfCheck();
 
 $result = $Key->setClone();
-
-
 
 		foreach($posts as $key => $val)
 		{
