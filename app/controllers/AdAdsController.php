@@ -94,6 +94,10 @@ class AdAdsController extends BaseController {
         return $this;
     }
 
+    public function getVal($attr=''){
+		return $this->$attr;
+	}
+
     //オリジナルのキャスト関数を呼び出し必要な値をセット
     public function setVal($posts){
         //self::castAdAds($posts);
@@ -113,6 +117,7 @@ class AdAdsController extends BaseController {
                 $clone->ad_ads_title = $this->ad_ads_title[$i];
                 for($q=0; $q<$this->count_ad_ads_title_word; $q++)
                 {
+                    $clone->ad_ads_name = $this->ad_ads_name[$q];
                     $clone->ad_ads_note01 = $this->ad_ads_note01[$q];
                     $clone->ad_ads_note02 = $this->ad_ads_note02[$q];
                 }

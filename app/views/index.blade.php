@@ -75,7 +75,7 @@
 									<div class="form-inline">
 										<div class="checkbox">
 											<label class="matchtype_label">
-												<input type="checkbox" name="match_type[]" value="exact">
+												<input type="checkbox" name="match_type" value="exact">
 												完全一致
 											</label>
 										</div>
@@ -94,7 +94,7 @@
 									<div class="form-inline">
 										<div class="checkbox">
 											<label class="matchtype_label">
-												<input type="checkbox" name="match_type[]" value="phrase">
+												<input type="checkbox" name="match_type" value="phrase">
 												フレーズ一致
 											</label>
 										</div>
@@ -113,7 +113,7 @@
 									<div class="form-inline">
 										<div class="checkbox">
 											<label class="matchtype_label">
-												<input type="checkbox" name="match_type[]" value="broad_plus">
+												<input type="checkbox" name="match_type" value="broad_plus">
 												絞り込み部分一致
 											</label>
 										</div>
@@ -132,7 +132,7 @@
 									<div class="form-inline">
 										<div class="checkbox">
 											<label class="matchtype_label">
-												<input type="checkbox" name="match_type[]" value="broad">
+												<input type="checkbox" name="match_type" value="broad">
 												部分一致
 											</label>
 										</div>

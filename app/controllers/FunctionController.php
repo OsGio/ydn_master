@@ -78,9 +78,11 @@ $clones_adgroup = $Key->AdGroup->setClone();
 $Cam = App::make('campaign');
 $Cam->setVal($posts);
 $err_cam = $Cam->selfCheck();
+//var_dump($Cam);exit;
 
 $Campaign = $Cam->makeCampaign($clones_adads, $clones_key, $clones_adgroup);
 
+// var_dump($Cam->AdAds);exit;
 
 return View::make('preview', array('Cam' => $Campaign, 'header' => $this->csv_header));
 

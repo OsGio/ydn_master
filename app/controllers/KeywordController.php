@@ -95,6 +95,10 @@ class KeywordController extends BaseController {
         return $this;
     }
 
+    public function getVal($attr=''){
+		return $this->$attr;
+	}
+
     //オリジナルのキャスト関数を呼び出し必要な値をセット
     public function setVal($posts){
         self::castKeywords($posts);
@@ -112,8 +116,8 @@ class KeywordController extends BaseController {
                 $clone = clone $this;
                 $clone->keywords = $this->keywords[$i];
                 $clone->ad_group_name = $this->ad_group_name[$i];
+                $clone->AdAds->setAdGroupName($this->ad_group_name[$i]);
                 $clone->AdAds->setLinkUrl($this->ad_ads_link_url[$i]); //AdAdsのmustであるad_ads_link_urlを挿入
-
                 $clones[] = $clone;
             }
         return $clones;
@@ -141,7 +145,7 @@ class KeywordController extends BaseController {
     //クラス専用キャスト関数
     protected function castKeywords($posts){
         extract($posts);
-        switch($match_type[0]){
+        switch($match_type){
             case "exact":
                 $this->match_type = "完全一致";break;
             case "phrase":

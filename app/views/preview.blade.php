@@ -8,28 +8,34 @@
 @section('content')
 <!DOCTYPE HTML>
 <html lang="ja">
+<table class="table table-bordered">
 <thead>
-    <tr>{{implode(',', $header)}}</tr>
+    <tr>{{HTML::header($header)}}</tr>
 </thead>
 <tbody>
-    @foreach(json_decode(json_encode($Cam), true) as $group)
+    @for($i = 0; $i < count($Cam); $i++)
     <tr>
-        {{var_dump($group)}}
+        {{HTML::toCsv($Cam)}}
     </tr>
-    @endforeach
+        <tr>
+        @for($j = 0; $j < count($Cam->AdGroup); $j++)
+        {{HTML::toCsv($Cam->AdGroup[$j])}}
+        </tr>
+            <tr>
+            @for($q = 0; $q < count($Cam->AdAds); $q++)
+            {{HTML::toCsv($Cam->AdAds[$q])}}
+            @endfor
+            </tr>
 {{--
-    @foreach($Cam->AdAds as $adads)
-    <tr>
-        {{implode(',', $adads)}}
-    </tr>
-    @endforeach
-    @foreach($Cam->Keyword as $key)
-    <tr>
-        {{implode(',', $key)}}
-    </tr>
-    @endforeach
+    <tr>{{var_dump($Cam->AdAds)}}</tr>
 --}}
+        <tr>
+        {{HTML::toCsv($Cam->Keyword[$j])}}
+        </tr>
+        @endfor
+    @endfor
 </tbody>
+</table>
 </html>
 @stop
 

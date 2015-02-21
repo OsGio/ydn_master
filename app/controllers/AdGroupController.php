@@ -90,6 +90,10 @@ class AdGroupController extends BaseController {
         return $this;
     }
 
+    public function getVal($attr=''){
+		return $this->$attr;
+	}
+
     public function setVal($posts){
         foreach($posts as $key => $val){
             if(in_array($key, $this->must)){
