@@ -88,7 +88,7 @@ class KeywordController extends BaseController {
     *
     */
 
-    //AdAdsコントローラーを生成
+    //AdAds, AdGroupコントローラーを生成
     public function __construct(){
         $this->AdAds = App::make('adads');
         $this->AdGroup = App::make('adgroup');
@@ -112,17 +112,32 @@ class KeywordController extends BaseController {
     //セルフチェックをして何もなかったらクローンに分割
     public function setClone(){
         if(!self::selfCheck()){
+            //cloneを外で定義 //construct時のAdAdsもクローン？
             for($i=0; $i<$this->count_keywords; $i++){
-                $clone = clone $this;
-                $clone->keywords = $this->keywords[$i];
-                $clone->ad_group_name = $this->ad_group_name[$i];
-                $clone->AdAds->setAdGroupName($this->ad_group_name[$i]);
-                $clone->AdAds->setLinkUrl($this->ad_ads_link_url[$i]); //AdAdsのmustであるad_ads_link_urlを挿入
-                $clones[] = $clone;
+                if($i==0){
+                    ${"clone".$i} = clone $this;
+                }else{
+                    ${"clone".$i} = clone ${"clone".($i-1)};
+                }
+                ${"clone".$i}->keywords = $this->keywords[$i];
+                ${"clone".$i}->ad_group_name = $this->ad_group_name[$i];
+                //${"clone".$i}->AdAds->setAdGroupName($this->ad_group_name[$i]);
+                // $clone->AdAds->ad_group_name = $this->ad_group_name[$i];
+                //ここでAdAdsをclone?
+                ${"clone".$i}->AdAds->setLinkUrl($this->ad_ads_link_url[$i]); //AdAdsのmustであるad_ads_link_urlを挿入
+                $clones[] = ${"clone".$i};
+// var_dump(${"clone".$i}->ad_group_name);
             }
+        for($i=0; $i<count($clones); $i++){
+            $clones[$i]->AdAds->setAdGroupName(${"clone".$i}->ad_group_name);
+        }
         return $clones;
         }
         return null;
+    }
+
+    public function setAdAds($AdAds){
+        $this->AdAds = $AdAds;
     }
 
     //自己必須項目チェック
@@ -170,7 +185,7 @@ class KeywordController extends BaseController {
         }
         $this->ad_group_name = $ad_group_name;
         $this->AdGroup->setAdGroupName($ad_group_name);
-        $this->AdAds->setAdGroupName($ad_group_name);
+        //$this->AdAds->setAdGroupName($ad_group_name);
     }
 
 

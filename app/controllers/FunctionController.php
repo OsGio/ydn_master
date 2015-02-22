@@ -50,39 +50,46 @@ class FunctionController extends BaseController {
 		$posts = $_POST;
 
 //var_dump($posts);exit;
-// $Cam = App::make('campaign');
-// $err = $Cam->selfCheck();
-//
-// $Key = new KeywordController;
-// $Key = App::make('keyword');
-// var_dump($Key);exit;
-//
 
+$AdAds = App::make('adads');
+$AdAds->setVal($posts);
+$clones_adads = $AdAds->setClone();
 
 $Key = App::make('keyword');
 $Key->setVal($posts);
-$err_key = $Key->selfCheck();
+$clones_key = $Key->setClone();
+
+var_dump($clones_key);exit;
+
+
+
+/* stable but not just Keywords->AdAds->ad_group_name
+$Key = App::make('keyword');
+$Key->setVal($posts);
+//$err_key = $Key->selfCheck();
 $clones_key = $Key->setClone();
 // var_dump($clones_key);
 
 $Key->AdAds->setval($posts);
-$err_adads = $Key->AdAds->selfCheck();
+//$err_adads = $Key->AdAds->selfCheck();
 $clones_adads = $Key->AdAds->setClone();
 // var_dump($clones_adads);
 
 $Key->AdGroup->setVal($posts);
-$err_adgroup = $Key->AdGroup->selfCheck();
+//$err_adgroup = $Key->AdGroup->selfCheck();
 $clones_adgroup = $Key->AdGroup->setClone();
 // var_dump($clones_adgroup);
 
 $Cam = App::make('campaign');
 $Cam->setVal($posts);
-$err_cam = $Cam->selfCheck();
+//$err_cam = $Cam->selfCheck();
 //var_dump($Cam);exit;
 
 $Campaign = $Cam->makeCampaign($clones_adads, $clones_key, $clones_adgroup);
+*/
 
-// var_dump($Cam->AdAds);exit;
+
+// var_dump($Key->AdAds->getVal($ad_group_name="ad_group_name"));exit;
 
 return View::make('preview', array('Cam' => $Campaign, 'header' => $this->csv_header));
 

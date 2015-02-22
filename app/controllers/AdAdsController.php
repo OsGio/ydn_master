@@ -100,7 +100,7 @@ class AdAdsController extends BaseController {
 
     //オリジナルのキャスト関数を呼び出し必要な値をセット
     public function setVal($posts){
-        //self::castAdAds($posts);
+        self::castAdAds($posts);
         foreach($posts as $key => $val){
             if(in_array($key, $this->must)){
                 $this->$key = $val;
@@ -111,7 +111,8 @@ class AdAdsController extends BaseController {
 
     //広告タイトルの数だけクローン作成
     public function setClone(){
-        if(!self::selfCheck()){
+        // if(!self::selfCheck()){
+// var_dump($this->count_ad_ads_title);exit;
             for($i=0; $i<$this->count_ad_ads_title; $i++){
                 $clone = clone $this;
                 $clone->ad_ads_title = $this->ad_ads_title[$i];
@@ -121,19 +122,18 @@ class AdAdsController extends BaseController {
                     $clone->ad_ads_note01 = $this->ad_ads_note01[$q];
                     $clone->ad_ads_note02 = $this->ad_ads_note02[$q];
                 }
-//var_dump($this);exit;
+                $clones[] = $clone;
 //                    $clone->core[$q] = $this->core[$q][$i];
-//                }
+                }
 
 
                 // $clone->keywords = $this->keywords[$i];
                 // $clone->ad_group_name = $this->ad_group_name[$i];
 
-                $clones[] = $clone;
-            }
+            // }
         return $clones;
-        }
-        return null;
+//        }
+//        return null;
     }
 
     public function selfCheck(){
