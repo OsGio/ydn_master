@@ -48,8 +48,8 @@ class FunctionController extends BaseController {
 	public function postIndex()
 	{
 		$posts = $_POST;
-
-//var_dump($posts);exit;
+		// extract($posts);
+// var_dump($posts);exit;
 
 $Key = App::make('keyword');
 $Key->setVal($posts);

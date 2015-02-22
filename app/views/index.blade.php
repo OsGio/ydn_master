@@ -4,10 +4,11 @@
 {{ Form::open(array('url' => './')) }}
 
 <section class="col-sm-12">
+		<strong style="color:red;">ページ内の※印は全てテスト用の注釈です。</strong>
 	<div id="first" class="col-md-12 col-lg-12">
 
 	<div id="campaign" class="panel panel-default col-sm-5">
-		<div class="panel-heading">キャンペーン</div>
+		<div class="panel-heading">キャンペーン<strong style="color:red;">※モデルと同じ仕様です。</strong></div>
 		<div class="panel-body">
 			<div class="form-group">
 				<fieldset class="form-horizontal">
@@ -38,7 +39,7 @@
 	</div><!-- /#campaign -->
 
 	<div id="adgroup" class="panel panel-default col-sm-5 col-sm-offset-1">
-		<div class="panel-heading">広告グループ</div>
+		<div class="panel-heading">広告グループ<strong style="color:red;">※モデルと同じ仕様です。</strong></div>
 		<div class="panel-body">
 			<fieldset class="form-horizontal">
 				<div class="form-group">
@@ -65,7 +66,7 @@
 			</div>
 		<div id="second" class="col-md-12 col-lg-12">
 				<div id="keyword_config" class="panel panel-default col-sm-12">
-					<div class="panel-heading">マッチタイプ設定</div>
+					<div class="panel-heading">マッチタイプ設定<strong style="color:red;">※モデルと同じ仕様ですが、拡張子を挿入させる場所が不明だったので、広告グループ（＋～一致）という文言のみです。</strong></div>
 					<div class="panel-body">
 					<table class="table table-bordered">
 						<tbody>
@@ -154,6 +155,8 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					キーワード
+					<strong style="color:red;">※使い方は同じです。＋キーワード掛け合わせボタンをクリックし、A/B/Cを組み合わせた総数がキーワード数となります。<br>
+												「URLエンコード」左に出したキーワードをエンコードし、テキストエリアに出力します。</strong>
 				</div>
 				<div class="panel-body">
 					<p lingdex="1">
@@ -208,7 +211,7 @@
 					<fieldset class="form-horizontal col-sm-5">
 						<div class="form-group">
 							<div class="col-sm-12">
-								<textarea id="encode" class="form-control" rows="8" name="ad_ads_link_url" required=""></textarea>
+								<textarea id="encode" class="form-control" rows="8" name="encoded_url" required=""></textarea>
 								<span class="help-block">キーワード数：<span class="count">0</span></span>	<span class="btn btn-sm btn-warning encode_btn" data-role="encode">URLエンコード</span>
 							</div>
 						</div>
@@ -218,92 +221,6 @@
 
 		</div><!-- /#second -->
 </section>
-
-{{--
-	<div id="second" class="col-md-6 col-lg-6">
-		<div id="keyword_config" class="panel panel-default">
-			<div class="panel-heading">キーワード設定</div>
-			<table class="table table-bordered">
-				<tbody>
-					<tr>
-						<th class="col-sm-5 text-right" rowspan="4">マッチタイプ / 表示URL接尾辞</th>
-						<td class="col-sm-7">
-							<div class="form-inline">
-								<div class="checkbox">
-									<label class="matchtype_label">
-										<input type="checkbox" name="match_type[]" value="exact">
-										完全一致
-									</label>
-								</div>
-								<div class="form-group">
-									<div class="input-group">
-										<span class="input-group-addon">.</span>
-										<input type="text" class="form-control matchtype_suffix" name="exact_suffix" value="jp">
-									</div>
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td class="col-sm-7">
-							<div class="form-inline">
-								<div class="checkbox">
-									<label class="matchtype_label">
-										<input type="checkbox" name="match_type[]" value="phrase">
-										フレーズ一致
-									</label>
-								</div>
-								<div class="form-group">
-									<div class="input-group">
-										<span class="input-group-addon">.</span>
-										<input type="text" class="form-control matchtype_suffix" name="exact_suffix" value="co.jp">
-									</div>
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td class="col-sm-7">
-							<div class="form-inline">
-								<div class="checkbox">
-									<label class="matchtype_label">
-										<input type="checkbox" name="match_type[]" value="broad_plus">
-										絞り込み部分一致
-									</label>
-								</div>
-								<div class="form-group">
-									<div class="input-group">
-										<span class="input-group-addon">.</span>
-										<input type="text" class="form-control matchtype_suffix" name="phrase_suffix" value="co.jp">
-									</div>
-								</div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td class="col-sm-7">
-							<div class="form-inline">
-								<div class="checkbox">
-									<label class="matchtype_label">
-										<input type="checkbox" name="match_type[]" value="broad">
-										部分一致
-									</label>
-								</div>
-								<div class="form-group">
-									<div class="input-group">
-										<span class="input-group-addon">.</span>
-										<input type="text" class="form-control matchtype_suffix" name="broad_suffix" value="jp">
-									</div>
-								</div>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div><!-- /#keyword_config -->
-	</div><!-- /#second /.col-md-6 col-lg-5 -->
---}}
-
 
 <section class="col-sm-12">
 		<div class="page-header col-md-12 col-lg-12">
@@ -315,7 +232,8 @@
 			<div class="col-sm-12">
 				<div id="title_generator" class="panel panel-default">
 					<div class="panel-heading">
-						広告タイトルパターン生成
+						広告タイトルパターン生成<strong style="color:red;">※ご要望のタイトルワードとタイトルフレーズのミックスです。タイトルフレーズの挿入したい箇所に@{{WORD}}と入力してください。<br>上部の＋ボタンでカラムの追加ができます。必要な分のワードとフレーズを記入してから、広告タイトル生成ボタンを押してください。<br>
+													注）キーワード数カウントの挙動や、削除ボタンがない等微調整中になります。</strong>
 					</div>
 					<div class="panel-body">
 						<div class="col-sm-12">
@@ -373,7 +291,8 @@
 		<div class="col-sm-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					広告追加
+					広告追加<strong style="color:red;">※広告追加機能未。広告名/説明文１/説明文２ ともにタイトルワードを挿入したい箇所に@{{WORD}}と入力してください。その部分が置換されます。<br>
+														@{{WORD}}挿入ワンクリックボタンの実装等、微調整中。</strong>
 				</div>
 				<div class="panel-body">
 					<fieldset class="form-horizontal ad_ads_field">
@@ -465,55 +384,7 @@
 --}}
 
 
-{{--
-					<fieldset class="form-horizontal ad_ads_field">
-						<div class="form-group row">
-							<label class="control-label col-sm-4">広告名</label>
-							<div class="col-sm-8">
-								<div class="input-group"><input class="form-control" type="text" name="ad_ads_name" data-max-input-length="50" data-check-text="yss"><span class="input-group-addon"><span class="count">0</span>/50</span></div><span class="help_nomargin"></span>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-4">広告タイトル</label>
-							<div class="col-sm-8">
-								<div class="input-group"><input class="form-control" type="text" name="ad_ads_title" data-max-input-length="15" data-change-insertion="true" data-check-text="yss"><span class="input-group-addon"><span class="count">0</span>/15</span></div><span class="help_nomargin"></span>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-4">説明文1</label>
-							<div class="col-sm-8">
-								<div class="input-group"><input class="form-control" type="text" name="ad_ads_note01" data-max-input-length="19" data-change-insertion="true" data-check-text="yss"><span class="input-group-addon"><span class="count">0</span>/19</span></div><span class="help_nomargin"></span>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-4">説明文2</label>
-							<div class="col-sm-8">
-								<div class="input-group"><input class="form-control" type="text" name="ad_ads_note02" data-max-input-length="19" data-change-insertion="true" data-check-text="yss"><span class="input-group-addon"><span class="count">0</span>/19</span></div><span class="help_nomargin"></span>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-4">表示URL</label>
-							<div class="col-sm-8">
-								<div class="input-group"><input class="form-control" type="text" name="ad_ads_display_url" data-max-input-length="29"><span class="input-group-addon"><span class="count">0</span>/29</span></div><span class="help_nomargin"></span>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-4">リンク先URL</label>
-							<div class="col-sm-8">
-								<div class="input-group"><input class="form-control" type="text" name="ad_ads_link_url" data-max-input-length="1024"><span class="input-group-addon"><span class="count">0</span>/1024</span></div><span class="help_nomargin"></span>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-sm-offset-4 col-sm-8">
-								<input type="hidden" name="ad_ads_listing_type" value="y">
-								<button class="btn btn-primary" type="button" name="ad_ads_data">広告追加</button>
-							</div>
-						</div>
-					</fieldset>
---}}
 
-
-
-	{{Form::submit('出力', array('class' => 'btn btn-large btn-primary'))}}
+	{{Form::submit('出力', array('class' => 'btn btn-large btn-primary'))}}<strong style="color:red;">※仕様上はさむプレビュー部分まで実装済み。テーブルタグにて表示されるので、それがそのままcsvファイルになるとイメージください。</strong>
 {{Form::close()}}
 @stop

@@ -123,6 +123,7 @@ class KeywordController extends BaseController {
                 $clone->AdAds->setLinkUrl($this->ad_ads_link_url[$i]);
                 //必要項目をセットしたあとにAdAdsのクローンをここで行う
                 $clone->AdAds = $clone->AdAds->setClone();
+// var_dump($clone);exit;
                 $clones[] = $clone;
             }
         return $clones;
@@ -195,8 +196,12 @@ class KeywordController extends BaseController {
         $keywords = explode("\n", $keyword);
         $this->count_keywords = count($keywords);
         $this->keywords = $keywords;
-        $url = explode("\n", $ad_ads_link_url);
-        $this->ad_ads_link_url = $url;
+        $encoded = explode("\n", $encoded_url);
+        for($i=0; $i<count($encoded); $i++)
+        {
+            $urls[] = $ad_ads_link_url. $encoded[$i];
+        }
+        $this->ad_ads_link_url = $urls;
         self::makeAdGroupName($keywords);
         return $keywords;
     }
