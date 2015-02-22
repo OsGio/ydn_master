@@ -22,8 +22,8 @@
         {{HTML::toCsv($Cam->AdGroup[$j])}}
         </tr>
             <tr>
-            @for($q = 0; $q < count($Cam->AdAds); $q++)
-            {{HTML::toCsv($Cam->AdAds[$q])}}
+            @for($q = 0; $q < count($Cam->Keyword[$j]->AdAds); $q++)
+            {{HTML::toCsv($Cam->Keyword[$j]->AdAds[$q])}}
             @endfor
             </tr>
 {{--

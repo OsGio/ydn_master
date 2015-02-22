@@ -51,15 +51,23 @@ class FunctionController extends BaseController {
 
 //var_dump($posts);exit;
 
-$AdAds = App::make('adads');
-$AdAds->setVal($posts);
-$clones_adads = $AdAds->setClone();
-
 $Key = App::make('keyword');
 $Key->setVal($posts);
-$clones_key = $Key->setClone();
+$Key->AdAds->setVal($posts);
 
-var_dump($clones_key);exit;
+// $clones_adads = $Key->AdAds->setClone();
+$clones_key = $Key->setClone();
+// var_dump($clones_key);exit;
+
+$Key->AdGroup->setVal($posts);
+$clones_adgroup = $Key->AdGroup->setClone();
+
+$Cam = App::make('campaign');
+$Cam->setVal($posts);
+$Campaign = $Cam->makeCampaign($clones_key, $clones_adgroup);
+
+return View::make('preview', array('Cam' => $Campaign, 'header' => $this->csv_header));
+
 
 
 

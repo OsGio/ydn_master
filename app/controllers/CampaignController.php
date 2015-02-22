@@ -102,9 +102,8 @@ class CampaignController extends BaseController{
         }
     }
 
-    public function makeCampaign($AdAds, $Keyword, $AdGroup){
+    public function makeCampaign($Keyword, $AdGroup){
         if(!self::selfCheck()){
-            $this->AdAds = $AdAds;
             $this->Keyword = $Keyword;
             $this->AdGroup = $AdGroup;
             return $this;

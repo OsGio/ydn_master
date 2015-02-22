@@ -112,6 +112,27 @@ class KeywordController extends BaseController {
     //セルフチェックをして何もなかったらクローンに分割
     public function setClone(){
         if(!self::selfCheck()){
+            //construct時のAdAdsもクローン
+            for($i=0; $i<$this->count_keywords; $i++)
+            {
+                $clone = clone $this;
+                $clone->AdAds = clone $this->AdAds;
+                $clone->keywords = $this->keywords[$i];
+                $clone->ad_group_name = $this->ad_group_name[$i];
+                $clone->AdAds->setAdGroupName($this->ad_group_name[$i]);
+                $clone->AdAds->setLinkUrl($this->ad_ads_link_url[$i]);
+                //必要項目をセットしたあとにAdAdsのクローンをここで行う
+                $clone->AdAds = $clone->AdAds->setClone();
+                $clones[] = $clone;
+            }
+        return $clones;
+        }
+        return null;
+    }
+/*
+    //セルフチェックをして何もなかったらクローンに分割
+    public function setClone(){
+        if(!self::selfCheck()){
             //cloneを外で定義 //construct時のAdAdsもクローン？
             for($i=0; $i<$this->count_keywords; $i++){
                 if($i==0){
@@ -135,6 +156,7 @@ class KeywordController extends BaseController {
         }
         return null;
     }
+*/
 
     public function setAdAds($AdAds){
         $this->AdAds = $AdAds;

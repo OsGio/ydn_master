@@ -1,1 +1,1 @@
-{"virtualbox":{"/vagrant":{"owner":"vagrant","group":"apache","mount_options":["dmode=777","fmode=777"],"guestpath":"/vagrant","hostpath":"/Users/sugiharanaoki/Documents/vagrant/sakura-server","disabled":false}}}
+{"virtualbox":{"/vagrant":{"guestpath":"/vagrant","hostpath":"D:/Users/user/Vagrant/sakura-server","disabled":false},"/var/www/html/app":{"owner":"vagrant","group":"apache","mount_options":["dmode=777","fmode=777"],"guestpath":"/var/www/html/app","hostpath":"D:/Users/user/Vagrant/sakura-server/app","disabled":false}}}
