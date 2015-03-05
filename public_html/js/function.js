@@ -37,6 +37,11 @@ console.log(titles);
 }
 
 
+function formValidator(){
+
+}
+
+
 
 $(function(){
 
@@ -57,6 +62,41 @@ $(function(){
 		newtr = newtr.data('tr', 'id', (d_id+1));
 		newtr.appendTo(tb);
 	});
+
+	//function deleteForm()
+	$('span.del_btn').on('click', function(){
+		var tr = $(this).closest('tr');
+		tr.slideUp();
+		tr.remove();
+	});
+
+// 	//function insWord()
+// 	$('span.ins_btn').on('click', function(){
+// // 		var it = document.focus();
+// // console.log(it);
+// 		$('input.ad_ads_title').selection('insert', {
+// 				text: '{{WORD}}',
+// 				mode: 'after'
+// 		});
+// 	});
+
+
+	function insert(text){
+var str = text;
+//テキストエリア位置取得
+document.getElementById("phrase").focus();
+var selection = document.selection.createRange();
+//テキストエリアの位置に取得した内容をセット
+selection.text = str+selection.text;
+}
+
+$('span.ins_btn').on('click', function(){
+	console.log('ins');
+	insert('{{WORD}}');
+});
+
+
+
 
 	//function encodedKeyword
 	$('#second span.encode_btn').on('click', function(){
@@ -114,6 +154,7 @@ console.log(titles);
 
 	});
 
+
 	//function corossKeyword
 	$('button[name="crossing_keyword"]').on('click', function(){
 		var k1 = toArray($('#keys1').val());
@@ -124,10 +165,16 @@ console.log(titles);
 		$('#keys3+span>span').text(k3.length);
 
 		var keywords = crossKeywords(k1, k2, k3);
-		$('#result+span span').text(keywords.length);
-		$('#result+span input[name="keyword_count"]').val(keywords.length);
+		$('#result+span>span').text(keywords.length);
 		keywords = keywords.join();
 		keywords = keywords.replace(/\,/g, '\n');
 		$('#result').val(keywords);
 	});
+
+
+
+
+
+
+
 });
