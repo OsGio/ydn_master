@@ -27,6 +27,7 @@
 		</div><!-- /.row -->
 	</div><!-- .container -->
 
+{{HTML::script('js/jquery.selection.js')}}
 {{HTML::script('js/function.js')}}
 </body>
 </html>

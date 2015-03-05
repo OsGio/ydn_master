@@ -8,7 +8,7 @@
 	<div id="first" class="col-md-12 col-lg-12">
 
 	<div id="campaign" class="panel panel-default col-sm-5">
-		<div class="panel-heading">キャンペーン<strong style="color:red;">※モデルと同じ仕様です。</strong></div>
+		<div class="panel-heading">キャンペーン<strong style="color:red;"></strong></div>
 		<div class="panel-body">
 			<div class="form-group">
 				<fieldset class="form-horizontal">
@@ -39,7 +39,7 @@
 	</div><!-- /#campaign -->
 
 	<div id="adgroup" class="panel panel-default col-sm-5 col-sm-offset-1">
-		<div class="panel-heading">広告グループ<strong style="color:red;">※モデルと同じ仕様です。</strong></div>
+		<div class="panel-heading">広告グループ<strong style="color:red;"></strong></div>
 		<div class="panel-body">
 			<fieldset class="form-horizontal">
 				<div class="form-group">
@@ -66,7 +66,7 @@
 			</div>
 		<div id="second" class="col-md-12 col-lg-12">
 				<div id="keyword_config" class="panel panel-default col-sm-12">
-					<div class="panel-heading">マッチタイプ設定<strong style="color:red;">※モデルと同じ仕様ですが、拡張子を挿入させる場所が不明だったので、広告グループ（＋～一致）という文言のみです。</strong></div>
+					<div class="panel-heading">マッチタイプ設定<strong style="color:red;">※広告グループ（＋～一致）という文言のみです。</strong></div>
 					<div class="panel-body">
 					<table class="table table-bordered">
 						<tbody>
@@ -155,8 +155,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					キーワード
-					<strong style="color:red;">※使い方は同じです。＋キーワード掛け合わせボタンをクリックし、A/B/Cを組み合わせた総数がキーワード数となります。<br>
-												「URLエンコード」左に出したキーワードをエンコードし、テキストエリアに出力します。</strong>
+					<strong style="color:red;"></strong>
 				</div>
 				<div class="panel-body">
 					<p lingdex="1">
@@ -232,8 +231,9 @@
 			<div class="col-sm-12">
 				<div id="title_generator" class="panel panel-default">
 					<div class="panel-heading">
-						広告タイトルパターン生成<strong style="color:red;">※ご要望のタイトルワードとタイトルフレーズのミックスです。タイトルフレーズの挿入したい箇所に@{{WORD}}と入力してください。<br>上部の＋ボタンでカラムの追加ができます。必要な分のワードとフレーズを記入してから、広告タイトル生成ボタンを押してください。<br>
+						広告タイトルパターン生成<strong style="color:red;">※タイトルフレーズの挿入したい箇所に@{{WORD}}と入力してください。<br>上部の＋ボタンでカラムの追加ができます。必要な分のワードとフレーズを記入してから、広告タイトル生成ボタンを押してください。<br>
 													注）キーワード数カウントの挙動や、削除ボタンがない等微調整中になります。</strong>
+													<span class="btn btn-info btn-sm ins_btn">@{{WORD}}</span><span>挿入ボタン</span>
 					</div>
 					<div class="panel-body">
 						<div class="col-sm-12">
@@ -241,12 +241,14 @@
 								<table class="table table-striped table-bordered table-hover col-sm-6">
 									<thead>
 										<tr>
-											<th colspan="2">タイトルワード<p class="btn btn-sm btn-primary add_btn" data-id="word">+</p></th>
+											<th colspan="3">タイトルワード<p class="btn btn-sm btn-primary add_btn" data-id="word">+</p></th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
-											<td class="ad_ads_title_word">{{Form::text('ad_ads_title_word[]', '', array('class' => 'as_ads_title_word'))}}</td><td class="title_word_num"></td>{{Form::hidden('title_word_num[]', '0', array('class' => 'title_word_num'))}}
+											<td class="ad_ads_title_word">{{Form::text('ad_ads_title_word[]', '', array('class' => 'as_ads_title_word'))}}</td>
+											<td class="title_word_num"></td>{{Form::hidden('title_word_num[]', '0', array('class' => 'title_word_num'))}}
+											<td><span class="btn btn-sm btn-danger del_btn" data-id="word">x</span></td>
 										</tr>
 									</tbody>
 								</table>
@@ -260,7 +262,7 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td class="ad_ads_title_phrase">{{Form::text('ad_ads_title_phrase[]', '', array('class' => 'as_ads_title'))}}</td><td class="title_phrase_num"></td>{{Form::hidden('title_phrase_num[]', '0', array('class' => 'title_phrase_num'))}}
+											<td class="ad_ads_title_phrase">{{Form::text('ad_ads_title_phrase[]', '', array('class' => 'as_ads_title', 'id' => 'phrase'))}}</td><td class="title_phrase_num"></td>{{Form::hidden('title_phrase_num[]', '0', array('class' => 'title_phrase_num'))}}
 										</tr>
 									</tbody>
 								</table>
@@ -293,6 +295,7 @@
 				<div class="panel-heading">
 					広告追加<strong style="color:red;">※広告追加機能未。広告名/説明文１/説明文２ ともにタイトルワードを挿入したい箇所に@{{WORD}}と入力してください。その部分が置換されます。<br>
 														@{{WORD}}挿入ワンクリックボタンの実装等、微調整中。</strong>
+														<span class="btn btn-info btn-sm ins_btn">@{{WORD}}</span><span>挿入ボタン</span>
 				</div>
 				<div class="panel-body">
 					<fieldset class="form-horizontal ad_ads_field">
