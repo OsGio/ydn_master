@@ -4,7 +4,7 @@ class SchemaController extends BaseController {
 
 /* Create Database on Schema */
 
-//create database LAS character set 'ujis' collate `ujis_japanese_ci` ;
+//create database YahooListing default charset 'utf8';
 //CREATE USER las_user IDENTIFIED BY 'Q5lrgSBA';
 //GRANT ALL PRIVILEGES ON `LAS`.* TO 'las_user'@'localhost';
 //FLUSH PRIVILEGES;
@@ -56,8 +56,7 @@ class SchemaController extends BaseController {
 
                     $table->increments('id');
                     $table->string('keyword', 255);
-                    $table->text('match_type'); //カンマ区切りで保持
-                    $table->text('encoded');
+                    $table->tinyInteger('match_type');
                     $table->timestamps();
                     $table->timestamp('deleted_at');
                     $table->integer('cam_id');
@@ -91,7 +90,7 @@ class SchemaController extends BaseController {
                     $table->string('note01', 255);
                     $table->string('note02', 255);
                     $table->string('display_url', 255);
-                    //$table->text('encoded_url', 255);
+                    $table->text('encoded_url', 255);
                     $table->timestamps();
                     $table->timestamp('deleted_at');
                     $table->integer('cam_id');
@@ -99,7 +98,6 @@ class SchemaController extends BaseController {
                     $table->integer('adgroup_id');
 
                 });
-                break;
                 //titleテーブルの作成
                 case 'titles':
                 Schema::create('titles', function($table)
@@ -124,31 +122,6 @@ class SchemaController extends BaseController {
         else
         {
             return $table_name. 'テーブルが存在しますので、処理を中止します。';
-        }
-    }
-
-
-    public function delete($table_name)
-    {
-        if(Schema::hasTable($table_name))
-        {
-            Schema::drop($table_name);
-            return $table_name. 'を削除しました';
-        }
-        else
-        {
-            return $table_name. 'は存在しません';
-        }
-    }
-
-    public function truncate($table_name)
-    {
-        try{
-            DB::table($table_name)->truncate();
-            return $table_name. "をtruncateしました";
-        }
-        catch(Exception $e){
-            return $table_name. "のtruncateに失敗しました";
         }
     }
 

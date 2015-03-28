@@ -43,9 +43,36 @@ Route::post('/add_ads', 'FunctionController@postAddAds');
 Route::any('/csv', 'FunctionController@postCsv');
 
 
-
-
 // Making Schema
 Route::get('create/{table_name}', 'SchemaController@create');
-Route::get('delete/{table_name}', 'SchemaController@delete');
-Route::get('truncate/{table_name}', 'SchemaController@truncate');
+
+// Route::get('create/users/table',function()
+// {
+    //  //usersテーブルの存在確認
+    //  if(!Schema::hasTable('users'))
+    //  {
+    //      // usersテーブルの作成
+    //      Schema::create('users', function($table)
+    //      {
+    //          $table->engine = 'InnoDB';
+     //
+    //         //  $table->create();
+    //          $table->increments('id');
+    //          $table->string('user_id', 255);
+    //          $table->string('password', 255);
+    //          $table->text('name')->nullable();
+    //          $table->string('email', 255);
+    //          $table->timestamps();
+    //          $table->timestamp('deleted_at');
+     //
+    //         //  $table->primary('id');
+    //          $table->unique(array('user_id', 'email'));
+     //
+    //     });
+    //     return 'usersテーブルを作成しました。';
+    //  }
+    //  else
+    //  {
+    //      return 'usersテーブルが存在しますので、処理を中止します。';
+    //  }
+// });

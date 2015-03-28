@@ -44,11 +44,10 @@ class FunctionController extends BaseController {
 								'デバイス','配信先','スマートフォン入札価格調整率（%）','広告タイプ','キャリア','優先デバイス',
 								'キャンペーンID','広告グループID','キーワードID','広告ID','エラーメッセージ');
 
-/*
+
 	public function postPreview()
 	{
 		$posts = $_POST;
-
 		//キーワードを作成
 		$Key = App::make('keyword');
 		$Key->setVal($posts);
@@ -85,112 +84,7 @@ var_dump($Key);exit;
 		return View::make('preview', array('Cam' => $Campaign, 'header' => $this->csv_header));
 
 	}
-*/
 
-	public function postPreview()
-	{
-		$posts = $_POST;
-//var_dump($posts);exit;
-		$Campaign = new Campaign;
-		$Keyword = new Keyword;
-		$AdGroup = new AdGroup;
-		$AdAds = new AdAds;
-		$Title = new Title;
-
-		extract($posts);
-		// キャンペーンsave
-		$Campaign->cam_name = $campaign_name;
-		$Campaign->cam_budget = $campaign_budget;
-		$Campaign->save();
-
-		$cam_id = $Campaign->id;
-
-		//キーワードsave & 広告グループsave
-		//match_typeをカンマ区切りのテキストに
-		$matches = implode(',', $match_type);
-		//改行コードを統一後配列化
-		$order   = "/\r\n||\n||\r/";
-		$keyword = str_replace($order, "\r\n", $keyword);
-		$encoded_url = str_replace($order, "\r\n", $encoded_url);
-		$keywords = explode("\r\n", $keyword);
-		$encoded = explode("\r\n", $encoded_url);
-		//キーワードとエンコードURLを対に
-		if(count($keywords)==count($encoded))
-		{
-			for($i=0; $i<count($keywords); $i++)
-			{
-				$key_and_enc[$i] = array(
-					$keywords[$i],
-					$encoded[$i]
-				);
-			}
-		}
-		else
-		{
-			return 'キーワードとエンコードURLの数が一致しません';
-		}
-//var_dump($key_and_enc);exit;
-		foreach($key_and_enc as list($k, $e))
-		{
-			$Keyword_c = clone($Keyword);
-			$Keyword_c->keyword = $k;
-			$Keyword_c->encoded = $e;
-			$Keyword_c->match_type = $matches;
-			$Keyword_c->cam_id = $cam_id;
-			$Keyword_c->save();
-
-			$key_id = $Keyword->id;
-
-			$AdGroup_c = clone($AdGroup);
-			$AdGroup_c->adgroup = $k;
-			$AdGroup_c->cost = $ad_group_cost;
-			$AdGroup_c->cam_id = $cam_id;
-			$AdGroup_c->save();
-
-			$adg_id = $AdGroup->id;
-		}
-
-		//タイトルsave
-		//空の値を除去
-		$ad_ads_title_word = array_filter($ad_ads_title_word, function($val){
-			return $val;
-		});
-		foreach($ad_ads_title_word as $w)
-		{
-			$Title_c = clone($Title);
-			$Title_c->word = $w;
-			// $Title_c->save();
-			foreach($ad_ads_title_phrase as $t)
-			{
-				//置換するか否か
-				//$phrase = preg_replace("/\{\{WORD\}\}/", $w, $ad_ads_title_phrase);
-				$Title_c = clone($Title);
-				$Title_c->phrase = $t;
-				$Title_c->cam_id = $cam_id;
-				$Title_c->save();
-			}
-		}
-
-		//広告save
-		$cnt = 1;
-		foreach($ad_ads_title as $t)
-		{
-			$AdAds_c = clone($AdAds);
-			$AdAds_c->title = $t;
-			$AdAds_c->adads = $ad_ads_name. "($cnt)"; //連番でユニーク重複回避
-			$AdAds_c->note01 = $ad_ads_note01;
-			$AdAds_c->note02 = $ad_ads_note02;
-			$AdAds_c->display_url = $ad_ads_display_url;
-			$AdAds_c->cam_id = $cam_id;
-			$AdAds_c->save();
-
-			$cnt++;
-		}
-
-
-var_dump($ad_ads_title);exit;
-
-	}
 
 	public function postCsv()
 	{
