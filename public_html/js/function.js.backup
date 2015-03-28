@@ -1,0 +1,210 @@
+function toArray(key){
+	key = key.replace(/\n|\r|\r\n/, '\n');
+	key = key.split('\n');
+	if(key[(key.length -1)]==''){ key.pop(); }
+	return key;
+}
+
+function crossKeywords(k1, k2, k3){
+	var type = $('input#crossing_keyword_type:checked').val();
+	var a = k1.length; var b = k2.length; var c = k3.length;
+	var keywords = [];
+
+//alert(type);
+	if(type=="1"){
+		for(var i=0; i<a; i++){
+			for(var j=0; j<c; j++){
+				for(var t=0; t<b; t++){
+					keywords.push(k1[i]+" "+k3[j]+" "+k2[t]);
+				}
+			}
+		}
+		for(var i=0; i<b; i++){
+			for(var j=0; j<a; j++){
+				for(var t=0; t<c; t++){
+					keywords.push(k2[i]+" "+k1[j]+" "+k3[t]);
+				}
+			}
+		}
+		for(var i=0; i<b; i++){
+			for(var j=0; j<c; j++){
+				for(var t=0; t<a; t++){
+					keywords.push(k2[i]+" "+k3[j]+" "+k1[t]);
+				}
+			}
+		}
+		for(var i=0; i<c; i++){
+			for(var j=0; j<a; j++){
+				for(var t=0; t<b; t++){
+					keywords.push(k3[i]+" "+k1[j]+" "+k2[t]);
+				}
+			}
+		}
+		for(var i=0; i<c; i++){
+			for(var j=0; j<b; j++){
+				for(var t=0; t<a; t++){
+					keywords.push(k3[i]+" "+k2[j]+" "+k1[t]);
+				}
+			}
+		}
+		return keywords;
+	}
+	else{
+		for(var i=0; i<a; i++){
+			for(var j=0; j<b; j++){
+				for(var t=0; t<c; t++){
+					keywords.push(k1[i]+" "+k2[j]+" "+k3[t]);
+				}
+			}
+		}
+		return keywords;
+	}
+}
+
+function titleGenerator(word, phrase){
+	var a = word.length; var b = phrase.length;
+	var titles = [];
+	for(var i=0; i<b; i++){
+		if(phrase[i].match(/^.*\{\{WORD\}\}.*$/)){
+			for(var j=0; j<a; j++){
+				var title = phrase[i].replace(/\{\{WORD\}\}/g, word[j]);
+				titles.push(title);
+			}
+		}else{
+			titles.push(phrase[i]);
+		}
+	}
+console.log(titles);
+	return titles;
+}
+
+
+function formValidator(){
+
+}
+
+function addAdsClone(e){
+	var t = e.target;
+console.log(t);
+	var fields = $(t).next('fieldset');
+console.log(fields);
+	var clone = fields.clone();
+	clone.slideUp();
+
+	fields.animate({
+		width: 0, height: 0, opacity: 0
+	}, {
+		duration: 'slow', complete: function(){
+			$(this).closest('div.panel-body').append(clone);
+			clone.slideDown('slow');
+		}
+	});
+}
+
+
+
+$(function(){
+
+	//function setNum()
+	$('td[class^="ad_ads_title"] > input:text').on('keypress', function(){
+		var num = $(this).val().length;
+		$(this).closest('td').next().text(num);
+		$(this).closest('tr').find('input:hidden').val(num);
+	});
+
+	//function addForm()
+	$('#third #title_generator p.add_btn').on('click', function(){
+		var tb = $(this).closest('thead').next('tbody');
+		var d_id = tb.children().filter('tr:last').data('id');
+		var class_name = tb.children('tr').find('td').attr('class');
+
+		var newtr = tb.children().filter('tr:last').clone(true);
+		newtr = newtr.data('tr', 'id', (d_id+1));
+		newtr.appendTo(tb);
+	});
+
+	//function deleteForm()
+	$('span.del_btn').on('click', function(){
+		var tr = $(this).closest('tr');
+		tr.slideUp();
+		tr.remove();
+	});
+
+
+	//function add_ads_btn
+	$('button[id="add_ads_btn"]').on('click', addAdsClone(this));
+
+
+
+	//function encodedKeyword
+	$('#second span.encode_btn').on('click', function(){
+		var txt = $('#result').val();
+		txt = txt.replace(' ', '');
+		txt = txt.replace(/\n|\r|\r\n/g, '\n');
+		txt = txt.split(/\n/);
+		var cnt = txt.length;
+		txt = encodeURI(txt);
+
+		var enc_txt = txt.replace(/\,/g, '\n');
+
+		$('#encode').val(enc_txt);
+		$('#encode+span>span').text(cnt);
+	});
+
+	//function generateTitle
+	$('#third #title_generator p#generate').on('click', function(){
+		var word = []; var phrase = [];
+		$('input[name^="ad_ads_title_word"]').each(function(){
+			word.push($(this).val());
+		});
+		$('input[name^="ad_ads_title_phrase"]').each(function(){
+			phrase.push($(this).val());
+		});
+
+		var titles = titleGenerator(word, phrase);
+		var ttl = "<tr><td></td><td></td><td></td></tr>";
+console.log(titles);
+		for(i=0; i<titles.length; i++){
+			$('tbody.ad_ads_titles').append('<tr></tr>');
+			var T = $('<input>').attr({
+				type: 'text',
+				name: 'ad_ads_title[]',
+				value: titles[i]
+			});
+			$('tbody.ad_ads_titles tr:last').append(T);
+			var N = $('<input>').attr({
+				type: 'hidden',
+				name: 'title_num[]',
+				value: titles[i].length
+			});
+			$('tbody.ad_ads_titles tr:last').append(N);
+
+
+
+			T.wrap(function(){
+				return '<td colspan="3"></td>';
+			});
+			N.wrap(function(){
+				return '<td>'+titles[i].length+'</td>';
+			});
+		}
+
+	});
+
+
+	//function crossKeyword
+	$('button[name="crossing_keyword"]').on('click', function(){
+		var k1 = toArray($('#keys1').val());
+		var k2 = toArray($('#keys2').val());
+		var k3 = toArray($('#keys3').val());
+		$('#keys1+span>span').text(k1.length);
+		$('#keys2+span>span').text(k2.length);
+		$('#keys3+span>span').text(k3.length);
+
+		var keywords = crossKeywords(k1, k2, k3);
+		$('#result+span>span').text(keywords.length);
+		keywords = keywords.join();
+		keywords = keywords.replace(/\,/g, '\n');
+		$('#result').val(keywords);
+	});
+});

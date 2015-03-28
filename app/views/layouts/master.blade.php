@@ -27,6 +27,8 @@
 		</div><!-- /.row -->
 	</div><!-- .container -->
 
-{{HTML::script('js/function.js')}}
+{{HTML::script('js/jquery.selection.js')}}
+{{--HTML::script('js/function.js')--}}
+@yield('foot')
 </body>
 </html>

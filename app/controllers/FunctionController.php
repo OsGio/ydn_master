@@ -45,101 +45,103 @@ class FunctionController extends BaseController {
 								'キャンペーンID','広告グループID','キーワードID','広告ID','エラーメッセージ');
 
 
-	public function postIndex()
+	public function postPreview()
 	{
 		$posts = $_POST;
-		// extract($posts);
-// var_dump($posts);exit;
+		//キーワードを作成
+		$Key = App::make('keyword');
+		$Key->setVal($posts);
+		//キーワードに紐づく広告作成
+		$Key->AdAds->setVal($posts);
 
-$Key = App::make('keyword');
-$Key->setVal($posts);
-$Key->AdAds->setVal($posts);
-
-// $clones_adads = $Key->AdAds->setClone();
-$clones_key = $Key->setClone();
-// var_dump($clones_key);exit;
-
-$Key->AdGroup->setVal($posts);
-$clones_adgroup = $Key->AdGroup->setClone();
-
-$Cam = App::make('campaign');
-$Cam->setVal($posts);
-$Campaign = $Cam->makeCampaign($clones_key, $clones_adgroup);
-
-return View::make('preview', array('Cam' => $Campaign, 'header' => $this->csv_header));
-
-
-
-
-/* stable but not just Keywords->AdAds->ad_group_name
-$Key = App::make('keyword');
-$Key->setVal($posts);
-//$err_key = $Key->selfCheck();
-$clones_key = $Key->setClone();
-// var_dump($clones_key);
-
-$Key->AdAds->setval($posts);
-//$err_adads = $Key->AdAds->selfCheck();
-$clones_adads = $Key->AdAds->setClone();
-// var_dump($clones_adads);
-
-$Key->AdGroup->setVal($posts);
-//$err_adgroup = $Key->AdGroup->selfCheck();
-$clones_adgroup = $Key->AdGroup->setClone();
-// var_dump($clones_adgroup);
-
-$Cam = App::make('campaign');
-$Cam->setVal($posts);
-//$err_cam = $Cam->selfCheck();
-//var_dump($Cam);exit;
-
-$Campaign = $Cam->makeCampaign($clones_adads, $clones_key, $clones_adgroup);
-*/
-
-
-// var_dump($Key->AdAds->getVal($ad_group_name="ad_group_name"));exit;
-
-return View::make('preview', array('Cam' => $Campaign, 'header' => $this->csv_header));
-
-var_dump($Cam);
-
-exit;
-
-$error = $Key->AdAds->selfCheck();
-
-$result = $Key->setClone();
-
-		foreach($posts as $key => $val)
+		//キーワード[マッチタイプ]の数だけ繰り返し
+		foreach($Key->getVal('keywords') as $k => $v)
 		{
-			if($val==""){ $posts[$key] = null; }
+			$clones_key = $Key->setClone($k);
 		}
-		extract($posts);
-		$keyword = str_replace(array("\r\n", "\r", "\n"), ' ', $keyword);
-//var_dump($keyword);exit;
-		$csv_compo_camp = array($campaign_name,null,'キャンペーン','オン',null,null,null,null,null,null,null,null,null,null,null,$campaign_budget,null,'PC|モバイル|スマートフォン|タブレット','すべて',0,null,null,null,null,null,null,null,null);
-		$csv_compo_adgroup = array($campaign_name,$keyword."($match_type[0])",'広告グループ','オン',null,null,null,null,$ad_group_cost,null,null,null,null,null,null,null,null,'PC|モバイル|スマートフォン|タブレット',null,null,null,null,null,null,null,null,null,null);
-		$csv_compo_ads = array($campaign_name,$keyword."($match_type[0])",'広告','オン',null,null,null,null,null,$ad_ads_name,$ad_ads_title,$ad_ads_note01,$ad_ads_note02,$ad_ads_display_url,$ad_ads_link_url,null,null,'PC|モバイル|スマートフォン|タブレット',null,null,'テキスト（15・19-19）',null,null,null,null,null,null,null);
-		$csv_compo_keywords = array($campaign_name,$keyword."($match_type[0])",'キーワード','オン',null,$match_type[0],$keyword,null,$ad_group_cost,null,null,null,null,null,null,null,null,'PC|モバイル|スマートフォン|タブレット',null,null,null,null,null,null,null,null,null,null);
-		//バリデーション項目数チェック
 
-		//$csv = array($csv_header, $csv_compo_camp, $csv_compo_adgroup, $csv_compo_keywords);
-		//SJISに変換
-		//$interenc = mb_internal_encoding();
-		//mb_convert_variables("SJIS", "", $csv);
+		foreach($Key->AdGroup as $ad)
+		{
+			$ad->setVal($posts);
+			$clones_adgroup = $ad->setClone();
+		}
 
-		$filename = $campaign_name. '.csv';
+var_dump($Key);exit;
+		$Cam = App::make('campaign');
+		$Cam->setVal($posts);
+		$Campaign = $Cam->makeCampaign($clones_key, $clones_adgroup);
 
-//		header("Content-Type: application/octet-stream");
-//		header("Content-Disposition: attachment; filename=$filename");
-		$csv = implode(",", $csv_header). "\n";
-		$csv .= implode(",", $csv_compo_camp). "\n";
-		$csv .= implode(",", $csv_compo_adgroup). "\n";
-		$csv .= implode(",", $csv_compo_ads). "\n";
-		$csv .= implode(",", $csv_compo_keywords). "\n";
-		$csv = mb_convert_encoding($csv, "SJIS");
-		print $csv;
+		//$Copy = serialize(clone($Campaign));
+		$Copy = serialize($Campaign);
+
+		Session::put('Cam', $Copy);
+
+// print('<pre>');
+// var_dump($Campaign->Keyword->AdAds);
+// print('<pre>');
+// exit;
+
+		return View::make('preview', array('Cam' => $Campaign, 'header' => $this->csv_header));
 
 	}
+
+
+	public function postCsv()
+	{
+		$posts = $_POST;
+		$fname = date('Y-m-d H:i:s');
+		$data = mb_convert_encoding($posts['pre_csv'], 'SJIS');
+
+	header("Content-disposition: attachment; filename=" . $fname . ".csv");
+	header("Content-Type: text/csv; charset=Shift_JIS ");
+	// echo mb_convert_encoding("テスト\n","SJIS", "UTF-8");
+	print($data);
+
+	exit;
+
+	}
+
+
+	public function postSaved()
+	{
+		$inputs = (Input::all()) ? Input::all() : null;
+// print('input is ...');
+// var_dump($inputs);
+//$inputs = null;
+
+		$Cam = unserialize(Session::get('Cam'));
+
+		Session::forget('cnt');
+		Session::flash('valid', $inputs);
+
+
+		return View::make('preview', array('Cam' => $Cam, 'header' => $this->csv_header));
+
+	}
+
+
+	public function validateFlg($target){
+		$validator = Validator::make(
+			array('ad_ads_title' => $ad_ads_title,
+					'ad_ads_name' => $ad_ads_name,
+					'ad_ads_note01' => $ad_ads_note01,
+					'ad_ads_note02' => $ad_ads_note02,
+					'ad_ads_display_url' => $ad_ads_display_url,
+					'ad_ads_link_url' => $ad_ads_link_url),
+			array('ad_ads_title' => 'required|max:15',
+					'ad_ads_name' => 'required|max:50',
+					'ad_ads_note01' => 'required|max:19',
+					'ad_ads_note02' => 'required|max:19',
+					'ad_ads_display_url' => 'required|max:29',
+					'ad_ads_link_url' => 'required|max:1024')
+	);
+		if($validator->fails())
+		{
+			$failed = $validator->failed();
+		}
+
+	}
+
 
 	public function getExceptsKeywords()
 	{

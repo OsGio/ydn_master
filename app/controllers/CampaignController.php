@@ -91,7 +91,8 @@ class CampaignController extends BaseController{
     }
 
 	public function getVal($attr=''){
-		return $this->$attr;
+		return ($attr=="") ? null : $this->$attr;
+		//return $this->$attr;
 	}
 
     public function setVal($posts){

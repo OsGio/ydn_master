@@ -1,0 +1,83 @@
+// out: ./mystyle.css
+
+
+@danger:#F2DEDE; @warning:#FCF8E3; @success:#DFF0D8; @active:#F5F5F5;
+
+//----- preview page -----
+#preview{
+    table{
+        width:5000px!important;
+    }
+}
+
+//----- common ------
+.generate-columns(12);
+
+.generate-columns(@n, @i: 1) when (@i =< @n) {
+  .col-xs-@{i},
+  .col-sm-@{i},
+  .col-md-@{i},
+  .col-lg-@{i} {
+      padding-right:0px;
+      padding-left:0px;
+  }
+  .generate-columns(@n, (@i + 1));
+}
+
+.btn{
+    margin-left:20px;
+}
+
+.textarea{
+    padding-left:15px!important;
+    padding-right:15px!important;
+}
+
+.form-group{
+    padding: 0px 15px;
+}
+
+.isright{
+    text-align:right;
+}
+.flr{
+    float:right;
+}
+
+input.danger{
+    background-color:@danger;
+}
+input.warning{
+    background-color:@warning;
+}
+input.success{
+    background-color:@success;
+}
+input.active{
+    background-color:@active;
+}
+
+
+
+//----- top page ------
+#third{
+    #title_phrases{
+        margin-top:42px;
+    }
+    #tab1{
+        input.ad_ads_title_word{
+            margin:10px 0px;
+        }
+    }
+    #tab3{
+        input.ad_ads_title_phrase{
+            margin:10px 0px;
+        }
+    }
+    #tab1,#tab3,#titles{
+        input.form-control{
+            display:table-cell;
+            width:81.2%;
+        }
+    }
+}

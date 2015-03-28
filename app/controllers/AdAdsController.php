@@ -100,28 +100,33 @@ class AdAdsController extends BaseController {
 
     //オリジナルのキャスト関数を呼び出し必要な値をセット
     public function setVal($posts){
-        self::castAdAds($posts);
+        //self::castAdAds($posts);
         foreach($posts as $key => $val){
             if(in_array($key, $this->must)){
                 $this->$key = $val;
             }
         }
         self::castAdAds($posts);
+//var_dump($this);exit;
     }
 
     //広告タイトルの数だけクローン作成
-    public function setClone(){
-        // if(!self::selfCheck()){
-// var_dump($this->count_ad_ads_title);exit;
-            for($i=0; $i<$this->count_ad_ads_title; $i++){
+    public function setClone($pare_i){
+         if(!self::selfCheck()){
+            for($i=0; $i<$this->count_ad_ads_title_word; $i++){
                 $clone = clone $this;
                 $clone->ad_ads_title = $this->ad_ads_title[$i];
-                for($q=0; $q<$this->count_ad_ads_title_word; $q++)
-                {
-                    $clone->ad_ads_name = $this->ad_ads_name[$q];
-                    $clone->ad_ads_note01 = $this->ad_ads_note01[$q];
-                    $clone->ad_ads_note02 = $this->ad_ads_note02[$q];
-                }
+
+                $clone->ad_ads_name = $this->ad_ads_name[$i] . "(".($i+1).")";
+                $clone->ad_ads_note01 = $this->ad_ads_note01[$i];
+                $clone->ad_ads_note02 = $this->ad_ads_note02[$i];
+                //代わりに上記を使用
+                // for($q=0; $q<$this->count_ad_ads_title_word; $q++)
+                // {
+                //     $clone->ad_ads_name = $this->ad_ads_name[$q];
+                //     $clone->ad_ads_note01 = $this->ad_ads_note01[$q];
+                //     $clone->ad_ads_note02 = $this->ad_ads_note02[$q];
+                // }
                 $clones[] = $clone;
 //                    $clone->core[$q] = $this->core[$q][$i];
                 }
@@ -130,7 +135,7 @@ class AdAdsController extends BaseController {
                 // $clone->keywords = $this->keywords[$i];
                 // $clone->ad_group_name = $this->ad_group_name[$i];
 
-            // }
+             }
         return $clones;
 //        }
 //        return null;
@@ -151,23 +156,28 @@ class AdAdsController extends BaseController {
         return (isset($miss)) ? $miss : null;
     }
 
-    //専用キャストクラス(※広告名は固定)
+    //専用キャストクラス
     protected function castAdAds($posts){
         extract($posts);
+        //配列のまま格納
         $this->ad_ads_title_word = $ad_ads_title_word;
         $this->count_ad_ads_title = count($ad_ads_title);
         $this->count_ad_ads_title_word = count($ad_ads_title_word);
         foreach($ad_ads_title_word as $t){
             if(isset($ad_ads_name)){
-                $ad_ads_names[] = preg_replace('/\{\{WORD\}\}/', $t, $this->ad_ads_name);
+                //$ad_ads_names[] = preg_replace('/\{\{WORD\}\}/', $t, $this->ad_ads_name);
+                $ad_ads_names[] = preg_replace('/\{\{WORD\}\}/', $t, $ad_ads_name);
             }
             if(isset($ad_ads_note01)){
-                $ad_ads_notes01[] = preg_replace('/\{\{WORD\}\}/', $t, $this->ad_ads_note01);
+                //$ad_ads_notes01[] = preg_replace('/\{\{WORD\}\}/', $t, $this->ad_ads_note01);
+                $ad_ads_notes01[] = preg_replace('/\{\{WORD\}\}/', $t, $ad_ads_note01);
             }
             if(isset($ad_ads_note02)){
-                $ad_ads_notes02[] = preg_replace('/\{\{WORD\}\}/', $t, $this->ad_ads_note02);
+                //$ad_ads_notes02[] = preg_replace('/\{\{WORD\}\}/', $t, $this->ad_ads_note02);
+                $ad_ads_notes02[] = preg_replace('/\{\{WORD\}\}/', $t, $ad_ads_note02);
             }
         }
+        //配列のまま格納
         $this->ad_ads_name = $ad_ads_names;
         $this->ad_ads_note01 = $ad_ads_notes01;
         $this->ad_ads_note02 = $ad_ads_notes02;

@@ -27,7 +27,9 @@ App::bind('campaign', function($app){
 
 
 Route::get('/', 'PageController@getIndex');
-Route::post('/', 'FunctionController@postIndex');
+Route::any('/preview', 'FunctionController@postPreview');
+Route::any('/saved', 'FunctionController@postSaved');
+
 
 Route::get('/excepts_keywords', 'PageController@getExceptsKeywords');
 Route::post('/excepts_keywords', 'FunctionController@postExceptsKeywords');
@@ -37,3 +39,5 @@ Route::post('/ads_group', 'FunctionController@postAdsGroup');
 
 Route::get('/add_ads', 'PageController@getAddAds');
 Route::post('/add_ads', 'FunctionController@postAddAds');
+
+Route::any('/csv', 'FunctionController@postCsv');
