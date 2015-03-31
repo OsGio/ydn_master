@@ -1,6 +1,7 @@
 <head>
   <title>ListingAssistantSystem</title>
-     <meta charset="EUC-JP" />
+     <!-- <meta charset="EUC-JP" /> -->
+     <meta charset="utf8" />
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css?ver=4.0">
     <link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css?ver=4.0">

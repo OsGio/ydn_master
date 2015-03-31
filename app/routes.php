@@ -11,7 +11,6 @@
 |
 */
 
-//Route::controller('AdAds', 'AdAdsController');
 App::bind('adads', function($app){
     return new AdAdsController;
 });
@@ -26,6 +25,7 @@ App::bind('campaign', function($app){
 });
 
 
+/* ver nodb
 Route::get('/', 'PageController@getIndex');
 Route::any('/preview', 'FunctionController@postPreview');
 Route::any('/saved', 'FunctionController@postSaved');
@@ -39,10 +39,15 @@ Route::post('/ads_group', 'FunctionController@postAdsGroup');
 
 Route::get('/add_ads', 'PageController@getAddAds');
 Route::post('/add_ads', 'FunctionController@postAddAds');
+*/
+
+Route::get('/', 'PageController@getIndex');
+Route::post('/', 'FunctionController@postIndex');
+Route::get('/preview', 'PageController@getPreview');
+
+
 
 Route::any('/csv', 'FunctionController@postCsv');
-
-
 
 
 // Making Schema

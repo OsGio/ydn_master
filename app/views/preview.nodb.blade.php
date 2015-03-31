@@ -16,28 +16,21 @@
     <tr>{{HTML::header($header)}}</tr>
 </thead>
 <tbody>
-@foreach($match_type as $m)
 
-    {{HTML::all($Campaign)}}
+    @for($i = 0; $i < count($Cam); $i++)
+        {{HTML::toCsv($Cam)}}
 
-    @for($i=0; $i < count($AdGroup); $i++)
+        @for($j = 0; $j < count($Cam->AdGroup); $j++)
+        {{HTML::toCsv($Cam->AdGroup[$j])}}
 
-        {{$AdGroup[$i]->setAdgmatch($m)}}
-        {{HTML::all($AdGroup[$i])}}
+            @for($q = 0; $q < count($Cam->Keyword[$j]->AdAds); $q++)
+            {{HTML::toCsv($Cam->Keyword[$j]->AdAds[$q])}}
+            @endfor
 
-        @for($j=0; $j < count($AdAds); $j++)
-            {{$AdAds[$j]->setKeyword($Keyword[$i])}}
-            {{$AdAds[$j]->setAdgroup($AdGroup[$i])}}
-            {{HTML::all($AdAds[$j])}}
+        {{HTML::toCsv($Cam->Keyword[$j])}}
         @endfor
 
-        {{$Keyword[$i]->setAdgroup($AdGroup[$i])}}
-        {{HTML::all($Keyword[$i])}}
-
     @endfor
-
-@endforeach
-
 </tbody>
 </div>
 {{--Session::get('valid')--}}

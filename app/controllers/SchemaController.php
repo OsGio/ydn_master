@@ -8,6 +8,7 @@ class SchemaController extends BaseController {
 //CREATE USER las_user IDENTIFIED BY 'Q5lrgSBA';
 //GRANT ALL PRIVILEGES ON `LAS`.* TO 'las_user'@'localhost';
 //FLUSH PRIVILEGES;
+//ALTER DATABASE `LAS` CHARACTER SET utf8 COLLATE utf8_general_ci;
 
     public function create($table_name){
 // var_dump($table_name);exit;

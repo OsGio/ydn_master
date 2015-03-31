@@ -87,7 +87,7 @@ var_dump($Key);exit;
 	}
 */
 
-	public function postPreview()
+	public function postIndex()
 	{
 		$posts = $_POST;
 //var_dump($posts);exit;
@@ -187,8 +187,15 @@ var_dump($Key);exit;
 			$cnt++;
 		}
 
+		//セッションで作成したキャンペーンIDを保持
+		Session::put('cam_id', $cam_id);
+		//match_type を セッションで保持
+		Session::put('match_type', $match_type);
+		// $page = App::make('PageController');
+		// $page->getPreview();
 
-var_dump($ad_ads_title);exit;
+		return Redirect::to_action('PageController@getPreview');
+
 
 	}
 

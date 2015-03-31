@@ -58,8 +58,8 @@ return array(
 			'database'  => 'LAS', // means Listing Assistant System
 			'username'  => 'las_user',
 			'password'  => 'Q5lrgSBA',
-			'charset'   => 'ujis', //'utf8',
-			'collation' => 'ujis_japanese_ci', //''utf8_unicode_ci',
+			'charset'   => 'utf8', //'ujis', //'utf8',
+			'collation' => 'utf8_general_ci', //'ujis_japanese_ci', //''utf8_unicode_ci',
 			'prefix'    => '',
 		),
 

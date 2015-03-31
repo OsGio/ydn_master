@@ -81,13 +81,18 @@
         $ad_ads_id = "ad_ads_id";
         $err_msg = "err_msg";
 
+        // return "<tr><td>". $obj->getVal($campaign_name) ."</td><td>". $obj->getVal($ad_group_name) ."</td><td>". $obj->getVal($component_type) ."</td><td>". $obj->getVal($send_flg) ."</td><td>". $obj->getVal($send_status) ."</td>
+        //         <td>". $obj->getVal($match_type) ."</td><td>". $obj->getVal($keywords) ."</td><td>". $obj->getVal($custom_url) ."</td><td>". $obj->getVal($ad_group_cost) ."</td><td>". $obj->getVal($ad_ads_name) ."</td><td>". $obj->getVal($ad_ads_title) ."</td><td>". $obj->getVal($ad_ads_note01) ."</td>
+        //         <td>". $obj->getVal($ad_ads_note02) ."</td><td>". $obj->getVal($ad_ads_display_url) ."</td><td>". $obj->getVal($ad_ads_link_url) ."</td><td>". $obj->getVal($campaign_budget) ."</td><td>". $obj->getVal($start_day) ."</td><td>". $obj->getVal($device_type) ."</td>
+        //         <td>". $obj->getVal($send_to) ."</td><td>". $obj->getVal($sp_budget_ratio) ."</td><td>". $obj->getVal($ad_ads_type) ."</td><td>". $obj->getVal($career) ."</td><td>". $obj->getVal($priority_device) ."</td>
+        //         <td>". $obj->getVal($campaign_id) ."</td><td>". $obj->getVal($ad_group_id) ."</td><td>". $obj->getVal($keywords_id) ."</td><td>". $obj->getVal($ad_ads_id) ."</td><td>". $obj->getVal($err_msg) ."</td></tr>";
 
-        // $did = array('ad_ads_name' => $obj->getVal($ad_ads_name), 'ad_ads_title' => $obj->getVal($ad_ads_title), 'ad_ads_note01' => $obj->getVal($ad_ads_note01),
-        //         'ad_ads_note02' => $obj->getVal($ad_ads_note02), 'ad_ads_display_url' => $obj->getVal($ad_ads_display_url), 'ad_ads_link_url' => $obj->getVal($ad_ads_link_url));
-        // $rules = array('ad_ads_name' => 'max:50', 'ad_ads_title' => 'max:15', 'ad_ads_note01' => 'max:19', 'ad_ads_note02' => 'max:19', 'ad_ads_display_url' => 'max:29',
-        //             'ad_ads_link_url' => 'max:1024');
-        //
-        // $validator = Validator::make($did, $rules);
+        $did = array('ad_ads_name' => $obj->getVal($ad_ads_name), 'ad_ads_title' => $obj->getVal($ad_ads_title), 'ad_ads_note01' => $obj->getVal($ad_ads_note01),
+                'ad_ads_note02' => $obj->getVal($ad_ads_note02), 'ad_ads_display_url' => $obj->getVal($ad_ads_display_url), 'ad_ads_link_url' => $obj->getVal($ad_ads_link_url));
+        $rules = array('ad_ads_name' => 'max:50', 'ad_ads_title' => 'max:15', 'ad_ads_note01' => 'max:19', 'ad_ads_note02' => 'max:19', 'ad_ads_display_url' => 'max:29',
+                    'ad_ads_link_url' => 'max:1024');
+
+        $validator = Validator::make($did, $rules);
 
 
         if($validator->fails()){
@@ -120,80 +125,6 @@
         }
         return $result;
     });
-
-    HTML::macro('all', function($obj)
-    {
-        $tds = '';
-        foreach($obj->keys as $k)
-        {
-            $td = '<td>'. $obj->$k .'</td>';
-            $tds .= $td;
-        }
-        $tr = '<tr>'. $tds .'</tr>';
-        return $tr;
-    });
-
-
-    HTML::macro('campaign', function($obj)
-    {
-        $tds = '';
-        foreach($obj->keys as $k)
-        {
-            $td = '<td>'. $obj->$k .'</td>';
-            $tds .= $td;
-        }
-        $tr = '<tr>'. $tds .'</tr>';
-
-        return $tr;
-    });
-
-    HTML::macro('adgroups', function($obj_arr)
-    {
-        $tds = '';
-        $trs = '';
-        foreach($obj_arr as $obj)
-        {
-            foreach($obj->keys as $k)
-            {
-                $td = '<td>'. $obj->$k .'</td>';
-                $tds .= $td;
-            }
-            $tr = '<tr>'. $tds .'</tr>';
-            $trs .= HTML::keywords($obj_arr);
-            $trs .= $tr;
-            $tds = '';
-        }
-
-        return $trs;
-    });
-
-    HTML::macro('keywords', function($obj_arr)
-    {
-        $tds = '';
-        $trs = '';
-        foreach($obj_arr as $obj)
-        {
-            foreach($obj->keys as $k)
-            {
-                $td = '<td>'. $obj->$k .'</td>';
-                $tds .= $td;
-            }
-            $tr = '<tr>'. $tds .'</tr>';
-            $trs .= $tr;
-            $tds = '';
-        }
-
-        return $trs;
-    });
-
-
-
-
-
-
-
-
-
 
 
 

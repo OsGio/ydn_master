@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-{{ Form::open(array('url' => '/preview', 'action' => 'post')) }}
+{{ Form::open(array('action' => 'FunctionController@postIndex')) }}
 
 <section class="col-sm-12">
 		<strong style="color:red;">※印は全てテスト用の注釈です。</strong>
