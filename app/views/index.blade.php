@@ -1,8 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-{{ Form::open(array('action' => 'FunctionController@postIndex')) }}
-
+{{ Form::open(array('method' => 'post', 'url' => ' ')) }}
 <section class="col-sm-12">
 		<strong style="color:red;">※印は全てテスト用の注釈です。</strong>
 	<div id="first" class="col-md-12 col-lg-12">
@@ -15,7 +14,7 @@
 					<label for="campaign_name" class="col-sm-4 control-label">キャンペーン名</label>
 					<div class="col-sm-8">
 						<div class="input-group">
-							<input type="text" class="form-control" id="campaign_name" name="campaign_name" placeholder="キャンペーン名" data-max-input-length="50" value="" required="">
+							<input type="text" class="form-control counted" id="campaign_name" name="campaign_name" placeholder="キャンペーン名" data-max-input-length="50" value="" required="">
 							<span class="input-group-addon">
 								<span class="count">0</span>/50
 							</span>
@@ -155,7 +154,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					キーワード
-					<strong style="color:red;">※部分一致仕様確認中</strong>
+					<strong style="color:red;"></strong>
 				</div>
 				<div class="panel-body">
 					<p lingdex="1">
@@ -167,21 +166,21 @@
 							<div class="col-sm-4 textarea">
 								<label>キーワードA</label><span class="isright">&nbsp{{ Form::checkbox('isbroad[]', '1', false, array('id' => 'A')) }}部分一致</span>
 								<p lingdex="2">
-									<textarea id="keys1" class="form-control" name="cross_keyword01" rows="8" data-count-keyword="true"></textarea>
+									<textarea id="keys1" class="form-control counted" name="cross_keyword01" rows="8" data-count-keyword="true"></textarea>
 									<span class="help-block">キーワード数：<span class="count">0</span></span>
 								</p>
 							</div>
 							<div class="col-sm-4 textarea">
 								<label>キーワードB</label><span class="isright">&nbsp{{ Form::checkbox('isbroad[]', '1', false, array('id' => 'B')) }}部分一致</span>
 								<p lingdex="3">
-									<textarea id="keys2" class="form-control" name="cross_keyword02" rows="8" data-count-keyword="true"></textarea>
+									<textarea id="keys2" class="form-control counted" name="cross_keyword02" rows="8" data-count-keyword="true"></textarea>
 									<span class="help-block">キーワード数：<span class="count">0</span></span>
 								</p>
 							</div>
 							<div class="col-sm-4 textarea">
 								<label>キーワードC</label><span class="isright">&nbsp{{ Form::checkbox('isbroad[]', '1', false, array('id' => 'C')) }}部分一致</span>
 								<p lingdex="4">
-									<textarea id="keys3" class="form-control" name="cross_keyword03" rows="8" data-count-keyword="true"></textarea>
+									<textarea id="keys3" class="form-control counted" name="cross_keyword03" rows="8" data-count-keyword="true"></textarea>
 									<span class="help-block">キーワード数：<span class="count">0</span></span>
 								</p>
 							</div>
@@ -260,8 +259,8 @@
 												<div id="title_word_tab" class="tab-content">
 													<div class="tab-pane fade in active" id="tab1">
 														<div class="forms">
-															{{Form::text('ad_ads_title_word[]', '', array('class' => 'ad_ads_title_word form-control', 'data-role' => 'word'))}}
-															<span class="del_btn btn btn-sm btn-danger"><b>x</b></span>
+															{{Form::text('ad_ads_title_word[]', '', array('class' => 'ad_ads_title_word form-control counted', 'data-role' => 'word'))}}
+															<span><span class="count">0</span>/15</span><span class="del_btn btn btn-sm btn-danger"><b>x</b></span>
 															{{Form::hidden('title_word_num[]', '0', array('class' => 'title_word_num', 'data-role' => 'word'))}}
 														</div>
 													</div>
@@ -284,13 +283,13 @@
 									<tbody>
 										<tr>
 									{{--
-											<td class="ad_ads_title_phrase">{{Form::text('ad_ads_title_phrase[]', '', array('class' => 'as_ads_title', 'id' => 'phrase', 'data-role' => 'phrase'))}}</td><td class="title_phrase_num"></td>{{Form::hidden('title_phrase_num[]', '0', array('class' => 'title_phrase_num'))}}
+											<td class="ad_ads_title_phrase">{{Form::text('ad_ads_title_phrase[]', '', array('class' => 'as_ads_title counted', 'id' => 'phrase', 'data-role' => 'phrase'))}}</td><td class="title_phrase_num"></td>{{Form::hidden('title_phrase_num[]', '0', array('class' => 'title_phrase_num'))}}
 									--}}
 											<td>
 												<div id="tab3">
 													<div class="forms">
-														{{Form::text('ad_ads_title_phrase[]', '', array('class' => 'ad_ads_title_phrase form-control', 'data-role' => 'phrase'))}}
-														<span class="del_btn btn btn-sm btn-danger"><b>x</b></span>
+														{{Form::text('ad_ads_title_phrase[]', '', array('class' => 'ad_ads_title_phrase form-control counted', 'data-role' => 'phrase'))}}
+														<span><span class="count">0</span>/15</span><span class="del_btn btn btn-sm btn-danger"><b>x</b></span>
 														{{Form::hidden('title_phrase_num[]', '0', array('class' => 'title_phrase_num', 'data-role' => 'phrase'))}}
 													</div>
 												</div>
@@ -334,39 +333,39 @@
 						<div class="form-group">
 							<label class="control-label col-sm-4">広告名</label>
 							<div class="col-sm-8">
-								<div class="input-group"><input class="form-control" type="text" name="ad_ads_name" data-max-input-length="50" data-check-text="yss"><span class="input-group-addon"><span class="count">0</span>/50</span></div><span class="help_nomargin"></span>
+								<div class="input-group"><input class="form-control counted" type="text" name="ad_ads_name" data-max-input-length="50" data-check-text="yss"><span class="input-group-addon"><span class="count">0</span>/50</span></div><span class="help_nomargin"></span>
 							</div>
 						</div>
 {{--
 						<div class="form-group">
 							<label class="control-label col-sm-4">広告タイトル</label>
 							<div class="col-sm-8">
-								<div class="input-group"><input class="form-control" type="text" name="ad_ads_title" data-max-input-length="15" data-change-insertion="true" data-check-text="yss"><span class="input-group-addon"><span class="count">0</span>/15</span></div><span class="help_nomargin"></span>
+								<div class="input-group"><input class="form-control counted" type="text" name="ad_ads_title" data-max-input-length="15" data-change-insertion="true" data-check-text="yss"><span class="input-group-addon"><span class="count">0</span>/15</span></div><span class="help_nomargin"></span>
 							</div>
 						</div>
 --}}
 						<div class="form-group">
 							<label class="control-label col-sm-4">説明文1</label>
 							<div class="col-sm-8">
-								<div class="input-group"><input class="form-control" type="text" name="ad_ads_note01" data-max-input-length="19" data-change-insertion="true" data-check-text="yss"><span class="input-group-addon"><span class="count">0</span>/19</span></div><span class="help_nomargin"></span>
+								<div class="input-group"><input class="form-control counted" type="text" name="ad_ads_note01" data-max-input-length="19" data-change-insertion="true" data-check-text="yss"><span class="input-group-addon"><span class="count">0</span>/19</span></div><span class="help_nomargin"></span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-sm-4">説明文2</label>
 							<div class="col-sm-8">
-								<div class="input-group"><input class="form-control" type="text" name="ad_ads_note02" data-max-input-length="19" data-change-insertion="true" data-check-text="yss"><span class="input-group-addon"><span class="count">0</span>/19</span></div><span class="help_nomargin"></span>
+								<div class="input-group"><input class="form-control counted" type="text" name="ad_ads_note02" data-max-input-length="19" data-change-insertion="true" data-check-text="yss"><span class="input-group-addon"><span class="count">0</span>/19</span></div><span class="help_nomargin"></span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-sm-4">表示URL</label>
 							<div class="col-sm-8">
-								<div class="input-group"><input class="form-control" type="text" name="ad_ads_display_url" data-max-input-length="29"><span class="input-group-addon"><span class="count">0</span>/29</span></div><span class="help_nomargin"></span>
+								<div class="input-group"><input class="form-control counted" type="text" name="ad_ads_display_url" data-max-input-length="29"><span class="input-group-addon"><span class="count">0</span>/29</span></div><span class="help_nomargin"></span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-sm-4">リンク先URL</label>
 							<div class="col-sm-8">
-								<div class="input-group"><input class="form-control" type="text" name="ad_ads_link_url" data-max-input-length="1024"><span class="input-group-addon"><span class="count">0</span>/1024</span></div><span class="help_nomargin"></span>
+								<div class="input-group"><input class="form-control counted" type="text" name="ad_ads_link_url" data-max-input-length="1024"><span class="input-group-addon"><span class="count">0</span>/1024</span></div><span class="help_nomargin"></span>
 							</div>
 						</div>
 						<div class="form-group">
@@ -440,11 +439,22 @@ function toArray(key){
 
 //キーワード掛け合わせ
 function crossKeywords(k1, k2, k3){
+	if(k1=='' && k2!=='' && k3!==''){
+		alert('左のエリアから順に入力してください');return false;
+	}
+	// else if((k1!=='' && k3!=='') && k2==''){
+	// 	alert('右のエリアから順に入力してください');return false;
+	// }
+	//if(k1=='' || (k1!=='' && k2=='')){alert('左のエリアから順に入力してください');return false;}
 	var type = $('input#crossing_keyword_type:checked').val();
 	var a = k1.length; var b = k2.length; var c = k3.length;
 	var keywords = [];
+	if(a==0){ a = 0; k1[0] = ""; }
+	if(b==0){ b = 0; k2[0] = ""; }
+	if(c==0){ c = 0; k3[0] = ""; }
 
-	if(type=="1"){
+	if(type=="1" && (a!==0 && b!==0 && c!==0)){
+//		alert('3');
 		for(var i=0; i<a; i++){
 			for(var j=0; j<b; j++){
 				for(var t=0; t<c; t++){
@@ -489,14 +499,50 @@ function crossKeywords(k1, k2, k3){
 		}
 		return keywords;
 	}
-	else{
+	else if(type=="1" && (a!==0 && b!==0 && c==0)){
+//		alert('2');
 		for(var i=0; i<a; i++){
 			for(var j=0; j<b; j++){
+				keywords.push(k1[i]+" "+k2[j]);
+			}
+		}
+		// for(var i=0; i<a; i++){
+		// 	for(var j=0; j<b; j++){
+		// 		keywords.push(k1[i]+" "+k2[j]);
+		// 	}
+		// }
+		for(var i=0; i<b; i++){
+			for(var j=0; j<a; j++){
+				keywords.push(k2[i]+" "+k1[j]);
+			}
+		}
+		// for(var i=0; i<b; i++){
+		// 	for(var j=0; j<a; j++){
+		// 		keywords.push(k2[i]+" "+k1[j]);
+		// 	}
+		// }
+		return keywords;
+	}
+	else if(type=="1" && (a!==0 && b==0 && c==0)){
+//		alert('1');
+		for(var i=0; i<a; i++){
+			keywords.push(k1[i]);
+		}
+		return keywords;
+	}
+	else{
+		for(var i=0; i<a; i++){
+			if(a!==0 && b==0 && c==0){keywords.push(k1[i]);}
+			for(var j=0; j<b; j++){
+				if(a!==0 && b!==0 && c==0){keywords.push(k1[i]+" "+k2[j]);}
 				for(var t=0; t<c; t++){
 					keywords.push(k1[i]+" "+k2[j]+" "+k3[t]);
 				}
 			}
 		}
+		// keywords_u = keywords.filter(function (x, i, self) {
+        //     return self.indexOf(x) === i;
+        // });
 		return keywords;
 	}
 }
@@ -566,6 +612,13 @@ function validator($input){
 
 
 $(function(){
+
+	//function setCount()
+	$('input.counted, textarea').on('bind keyup', function(){
+console.log($(this).val().length);
+		var cnt = $(this).val().length;
+		$(this).next().find('span.count').text(cnt);
+	});
 
 	//function setNum()
 	$('td[class^="ad_ads_title"] > input:text').on('keypress', function(){
@@ -690,37 +743,38 @@ $(function(){
 
 	//function isbroadCheck
 	$('button[name="crossing_keyword"]').on('click', function(){
-//		var ids = [];
-//		var flugs = [];
+		var ids = [];
+		var flugs = [];
 		var k1 = toArray($('#keys1').val());
 		var k2 = toArray($('#keys2').val());
 		var k3 = toArray($('#keys3').val());
-//		var broad = $('input[name^="isbroad"]:checked');
-//		var match = $('input[name^="match_type"]:checked');
+		var broad = $('input[name^="isbroad"]:checked');
+		//var match = $('input[name^="match_type"]:checked');
+console.log(broad);
 // 		match.each(function(){
 // 			flugs.push($(this)).val();
 // 		});
 // console.log(flugs);
-//		//チェックされているIDを抽出
-//		broad.each(function(){
-//			ids.push($(this).attr('id'));
-//		});
-//		//絞込み該当グループに '+ 'をアタマに追加
-//		if($.inArray('A', ids)!== -1){
-//			k1 = $.map(k1, function(n, i){
-//				return ' +'+n;
-//			});
-//		}
-//		if($.inArray('B', ids)!== -1){
-//			k2 = $.map(k2, function(n, i){
-//				return ' +'+n;
-//			});
-//		}
-//		if($.inArray('C', ids)!== -1){
-//			k3 = $.map(k3, function(n, i){
-//				return ' +'+n;
-//			});
-//		}
+		//チェックされているIDを抽出
+		broad.each(function(){
+			ids.push($(this).attr('id'));
+		});
+		//絞込み該当グループに '+ 'をアタマに追加
+		if($.inArray('A', ids)!== -1){
+			k1 = $.map(k1, function(n, i){
+				return ' +'+n;
+			});
+		}
+		if($.inArray('B', ids)!== -1){
+			k2 = $.map(k2, function(n, i){
+				return ' +'+n;
+			});
+		}
+		if($.inArray('C', ids)!== -1){
+			k3 = $.map(k3, function(n, i){
+				return ' +'+n;
+			});
+		}
 		$('#keys1+span>span').text(k1.length);
 		$('#keys2+span>span').text(k2.length);
 		$('#keys3+span>span').text(k3.length);

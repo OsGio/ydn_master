@@ -66,7 +66,6 @@ class FunctionController extends BaseController {
 			$clones_adgroup = $ad->setClone();
 		}
 
-var_dump($Key);exit;
 		$Cam = App::make('campaign');
 		$Cam->setVal($posts);
 		$Campaign = $Cam->makeCampaign($clones_key, $clones_adgroup);
@@ -120,7 +119,7 @@ var_dump($Key);exit;
 	}
 
 
-	public function validateFlg($target){
+	public function validateFlg(){
 		$validator = Validator::make(
 			array('ad_ads_title' => $ad_ads_title,
 					'ad_ads_name' => $ad_ads_name,
@@ -138,7 +137,9 @@ var_dump($Key);exit;
 		if($validator->fails())
 		{
 			$failed = $validator->failed();
+			return $failed;
 		}
+		return null;
 
 	}
 

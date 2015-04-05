@@ -92,6 +92,7 @@ class SchemaController extends BaseController {
                     $table->string('note01', 255);
                     $table->string('note02', 255);
                     $table->string('display_url', 255);
+                    $table->string('link_url', 255);
                     //$table->text('encoded_url', 255);
                     $table->timestamps();
                     $table->timestamp('deleted_at');

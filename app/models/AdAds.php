@@ -42,14 +42,14 @@ class AdAds extends Eloquent{
 	public $keys = array(
 		'campaign_name', 'ad_group_name', 'component_type', 'send_flg', 'send_status', 'match_type', 'keywords',
 		'custom_url', 'ad_group_cost', 'adads', 'title', 'note01', 'note02',
-		'display_url','encoded','cam_budget','start_day','device_type','send_to',
+		'display_url','ad_ads_link_url','cam_budget','start_day','device_type','send_to',
 		'sp_budget_ratio','ad_ads_type','career','priority_device','campaign_id','ad_group_id','keywords_id',
 		'ad_ads_id','err_msg'
 	);
 
 	public function campaign()
 	{
-		return $this->belongsTo('Campaign', 'id', 'cam_id');
+		return $this->belongsTo('Campaign');
 	}
 
 	public function keyword()
@@ -80,6 +80,11 @@ class AdAds extends Eloquent{
 	public function setAdgroup($AdGroup)
 	{
 		$this->ad_group_name = $AdGroup->adgroup;
+	}
+
+	public function setEncoded($Keyword)
+	{
+		$this->ad_ads_link_url = $this->link_url. '?' .$Keyword->encoded;
 	}
 
 }

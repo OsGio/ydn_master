@@ -42,7 +42,7 @@ class Keyword extends Eloquent{
 	public $keys = array(
 		'campaign_name', 'ad_group_name', 'component_type', 'send_flg', 'send_status', 'match_type', 'keyword',
 		'custom_url', 'ad_group_cost', 'ad_ads_name', 'ad_ads_title', 'ad_ads_note01', 'ad_ads_note02',
-		'ad_ads_display_url','encoded','cam_budget','start_day','device_type','send_to',
+		'ad_ads_display_url','ad_ads_link_url','cam_budget','start_day','device_type','send_to',
 		'sp_budget_ratio','ad_ads_type','career','priority_device','campaign_id','ad_group_id','keywords_id',
 		'ad_ads_id','err_msg'
 	);
@@ -72,9 +72,34 @@ class Keyword extends Eloquent{
 		$this->ad_group_name = $AdGroup->adgroup;
 	}
 
+	public function setCost($AdGroup)
+	{
+		$this->ad_group_cost = $AdGroup->cost;
+	}
+
 	public function setMatchtype($m)
 	{
 		$this->match_type = $m;
 	}
+
+	// jquery 側で処理
+	// public function modifyKeyword($m)
+	// {
+	// 	if($m == "部分一致")
+	// 	{
+	// 		$before = '/^(.*)\s(.*)\s(.*)/';
+	// 		$after = '+$1 +$2 +$3';
+	// 		$this->keyword = preg_replace($before, $after, $this->keyword);
+	// 		$this->save();
+	// 	}
+	// 	else
+	// 	{
+	// 		$before = '/^\+(.*)\s\+(.*)\s\+(.*)/';
+	// 		$after = '$1 $2 $3';
+	// 		$this->keyword = preg_replace($before, $after, $this->keyword);
+	// 		$this->save();
+	//
+	// 	}
+	// }
 
 }

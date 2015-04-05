@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://valis.sakura.ne.jp/',
+	'url' => 'http://valis.sakura.ne.jp/ydn/',
 
 	/*
 	|--------------------------------------------------------------------------

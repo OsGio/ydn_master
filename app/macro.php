@@ -123,11 +123,22 @@
 
     HTML::macro('all', function($obj)
     {
+        $err = array_keys(Session::get('validated'));
         $tds = '';
         foreach($obj->keys as $k)
         {
-            $td = '<td>'. $obj->$k .'</td>';
-            $tds .= $td;
+            //vlidateに引っかかっていればエラークラス
+            if ($err!==null && in_array($k, $err))
+            {
+                //$td = '<td class="'. $k . " " . "danger" .'">'. $obj->$k .'</td>';
+                $td = '<td class="'. $k . " " ."" .'">'. Form::text($k, $obj->$k, array('class' => 'danger')) .'</td>';
+                $tds .= $td;
+            }
+            else
+            {
+                $td = '<td class="'. $k .'">'. $obj->$k .'</td>';
+                $tds .= $td;
+            }
         }
         $tr = '<tr>'. $tds .'</tr>';
         return $tr;

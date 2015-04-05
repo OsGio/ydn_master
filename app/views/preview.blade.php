@@ -16,9 +16,8 @@
     <tr>{{HTML::header($header)}}</tr>
 </thead>
 <tbody>
-@foreach($match_type as $m)
-
-    {{HTML::all($Campaign)}}
+{{HTML::all($Campaign)}}
+    @foreach($match_type as $m)
 
     @for($i=0; $i < count($AdGroup); $i++)
 
@@ -26,12 +25,15 @@
         {{HTML::all($AdGroup[$i])}}
 
         @for($j=0; $j < count($AdAds); $j++)
-            {{$AdAds[$j]->setKeyword($Keyword[$i])}}
             {{$AdAds[$j]->setAdgroup($AdGroup[$i])}}
+            {{$AdAds[$j]->setEncoded($Keyword[$i])}}
             {{HTML::all($AdAds[$j])}}
         @endfor
 
+        {{--$Keyword[$i]->modifyKeyword($m)--}}
+        {{$Keyword[$i]->setMatchtype($m)}}
         {{$Keyword[$i]->setAdgroup($AdGroup[$i])}}
+        {{$Keyword[$i]->setCost($AdGroup[$i])}}
         {{HTML::all($Keyword[$i])}}
 
     @endfor

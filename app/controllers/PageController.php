@@ -59,7 +59,6 @@ class PageController extends BaseController {
 					$m = '部分一致';break;
 			}
 		}
-
 		$Campaign = Campaign::find($cam_id);
 		$AdGroup = Campaign::find($cam_id)->adgroup;
 		foreach($AdGroup as $adg)
@@ -72,18 +71,13 @@ class PageController extends BaseController {
 		{
 			$key->campaign_name = $Campaign->cam_name;
 		}
-		$AdAds = Keyword::find($cam_id)->adads;
+		$AdAds = Campaign::find($cam_id)->adads;
 		foreach($AdAds as $ads)
 		{
 			$ads->campaign_name = $Campaign->cam_name;
 		}
 
-		//$adgroup = AdGroup::all()->campaign()->get();
-
-//var_dump($adads);exit;
-
-
-		return View::make('/preview', compact('Campaign', 'AdGroup', 'Keyword', 'AdAds'))->with('header', $this->csv_header)->with('match_type', $match_type);
+		return View::make('preview', compact('Campaign', 'AdGroup', 'Keyword', 'AdAds'))->with('header', $this->csv_header)->with('match_type', $match_type);
 	}
 
 

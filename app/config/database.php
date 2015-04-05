@@ -52,6 +52,7 @@ return array(
 			'prefix'   => '',
 		),
 
+/* local */
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
@@ -62,7 +63,18 @@ return array(
 			'collation' => 'utf8_general_ci', //'ujis_japanese_ci', //''utf8_unicode_ci',
 			'prefix'    => '',
 		),
-
+/* test-valis
+		'mysql' => array(
+			'driver'    => 'mysql',
+			'host'      => 'mysql318.db.sakura.ne.jp',
+			'database'  => 'valis_las', // means Listing Assistant System
+			'username'  => 'valis',
+			'password'  => 'Plusminus0',
+			'charset'   => 'utf8', //'ujis', //'utf8',
+			'collation' => 'utf8_general_ci', //'ujis_japanese_ci', //''utf8_unicode_ci',
+			'prefix'    => '',
+		),
+*/
 		'pgsql' => array(
 			'driver'   => 'pgsql',
 			'host'     => 'localhost',

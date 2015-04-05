@@ -56,6 +56,11 @@ class Campaign extends Eloquent{
 		return $this->hasMany('AdGroup', 'cam_id', 'id');
 	}
 
+	public function adads()
+	{
+		return $this->hasMany('AdAds', 'cam_id', 'id');
+	}
+
 	public function getVal($var)
 	{
 		return $this->find(Session::get('cam_id'))->$var;

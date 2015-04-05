@@ -90,7 +90,6 @@ var_dump($Key);exit;
 	public function postIndex()
 	{
 		$posts = $_POST;
-//var_dump($posts);exit;
 		$Campaign = new Campaign;
 		$Keyword = new Keyword;
 		$AdGroup = new AdGroup;
@@ -103,7 +102,7 @@ var_dump($Key);exit;
 		$Campaign->cam_budget = $campaign_budget;
 		$Campaign->save();
 
-		$cam_id = $Campaign->id;
+		$cam_id = $Campaign->max('id');
 
 		//キーワードsave & 広告グループsave
 		//match_typeをカンマ区切りのテキストに
@@ -124,12 +123,38 @@ var_dump($Key);exit;
 					$encoded[$i]
 				);
 			}
+
+			/* PHP ver 5.5 > */
+			for($i=0; $i<count($keywords); $i++)
+			{
+				$Keyword_c = clone($Keyword);
+				$Keyword_c->keyword = $keywords[$i];
+				$Keyword_c->encoded = $encoded[$i];
+				$Keyword_c->match_type = $matches;
+				$Keyword_c->cam_id = $cam_id;
+				$Keyword_c->save();
+
+				$key_id = $Keyword_c->id;
+
+				$AdGroup_c = clone($AdGroup);
+				if(preg_match('/ \+/', $keywords[$i]))
+				{
+					$keywords[$i] = str_replace('+', '', $keywords[$i]);
+				}
+				$AdGroup_c->adgroup = $keywords[$i];
+				$AdGroup_c->cost = $ad_group_cost;
+				$AdGroup_c->cam_id = $cam_id;
+				$AdGroup_c->save();
+
+				$adg_id = $AdGroup_c->id;
+			}
 		}
 		else
 		{
 			return 'キーワードとエンコードURLの数が一致しません';
 		}
-//var_dump($key_and_enc);exit;
+
+/* PHP ver.5.5 <
 		foreach($key_and_enc as list($k, $e))
 		{
 			$Keyword_c = clone($Keyword);
@@ -149,12 +174,42 @@ var_dump($Key);exit;
 
 			$adg_id = $AdGroup->id;
 		}
-
+*/
 		//タイトルsave
 		//空の値を除去
 		$ad_ads_title_word = array_filter($ad_ads_title_word, function($val){
 			return $val;
 		});
+
+		$cnt = 1;
+		foreach($ad_ads_title_phrase as $p)
+		{
+			if(preg_match("/\{\{WORD\}\}/", $p))
+			{
+				foreach($ad_ads_title_word as $w)
+				{
+					$Title_c = clone($Title);
+					$Title_c->phrase = $p;
+					$Title_c->word = $w;
+					$Title_c->cam_id = $cam_id;
+					$Title_c->adads_id = $cnt;
+					$Title_c->save();
+					$cnt++;
+				}
+			}
+			else
+			{
+				$Title_c = clone($Title);
+				$Title_c->phrase = $p;
+				$Title_c->word = 0;
+				$Title_c->cam_id = $cam_id;
+				$Title_c->adads_id = $cnt;
+				$Title_c->save();
+				$cnt++;
+			}
+		}
+
+/* ver.1.0
 		foreach($ad_ads_title_word as $w)
 		{
 			$Title_c = clone($Title);
@@ -164,15 +219,60 @@ var_dump($Key);exit;
 			{
 				//置換するか否か
 				//$phrase = preg_replace("/\{\{WORD\}\}/", $w, $ad_ads_title_phrase);
-				$Title_c = clone($Title);
+				//$Title_c = clone($Title);
 				$Title_c->phrase = $t;
 				$Title_c->cam_id = $cam_id;
 				$Title_c->save();
 			}
 		}
-
+*/
 		//広告save
 		$cnt = 1;
+		for($i=0; $i<count($ad_ads_title); $i++)
+		{
+			$AdAds_c = clone($AdAds);
+			$AdAds_c->title = $ad_ads_title[$i];
+			$AdAds_c->adads = $ad_ads_name. "($cnt)"; //連番でユニーク重複回避
+
+			if(preg_match("/\{\{WORD\}\}/", $ad_ads_note01))
+			{
+				$word = Title::where('cam_id', '=', $cam_id)->where('adads_id', '=', $cnt)->first();
+				$ad_ads_replace01 = str_replace('{{WORD}}', $word->word, $ad_ads_note01);
+				$AdAds_c->note01 = $ad_ads_replace01;
+				if($word->word=="0")
+				{
+					$ad_ads_replace01 = str_replace('{{WORD}}', '', $ad_ads_note01);
+					$AdAds_c->note01 = $ad_ads_replace01;
+				}
+			}
+			else
+			{
+				$AdAds_c->note01 = $ad_ads_note01;
+			}
+			if(preg_match("/\{\{WORD\}\}/", $ad_ads_note02))
+			{
+				$word = Title::where('cam_id', '=', $cam_id)->where('adads_id', '=', $cnt)->first();
+				$ad_ads_replace02 = str_replace('{{WORD}}', $word->word, $ad_ads_note02);
+				$AdAds_c->note02 = $ad_ads_replace02;
+				if($word->word=="0")
+				{
+					$ad_ads_replace02 = str_replace('{{WORD}}', '', $ad_ads_note02);
+					$AdAds_c->note02 = $ad_ads_replace02;
+				}
+			}
+			else
+			{
+				$AdAds_c->note02 = $ad_ads_note02;
+			}
+			$AdAds_c->display_url = $ad_ads_display_url;
+			$AdAds_c->link_url = $ad_ads_link_url;
+			$AdAds_c->cam_id = $cam_id;
+			$AdAds_c->save();
+
+			$cnt++;
+		}
+
+/* ver.1.0
 		foreach($ad_ads_title as $t)
 		{
 			$AdAds_c = clone($AdAds);
@@ -181,12 +281,13 @@ var_dump($Key);exit;
 			$AdAds_c->note01 = $ad_ads_note01;
 			$AdAds_c->note02 = $ad_ads_note02;
 			$AdAds_c->display_url = $ad_ads_display_url;
+			$AdAds_c->link_url = $ad_ads_link_url;
 			$AdAds_c->cam_id = $cam_id;
 			$AdAds_c->save();
 
 			$cnt++;
 		}
-
+*/
 		//セッションで作成したキャンペーンIDを保持
 		Session::put('cam_id', $cam_id);
 		//match_type を セッションで保持
@@ -194,7 +295,33 @@ var_dump($Key);exit;
 		// $page = App::make('PageController');
 		// $page->getPreview();
 
-		return Redirect::to_action('PageController@getPreview');
+		$validates = $this->validateFlg();
+		//db名に置き換え
+		if($validates!==null && is_array($validates))
+		{
+			foreach($validates as $key => $val)
+			{
+				switch($key)
+				{
+					case "ad_ads_title":
+						$key = 'title';break;
+					case "ad_ads_name":
+						$key = 'adads';break;
+					case "ad_ads_note01":
+						$key = 'note01';break;
+					case "ad_ads_note02":
+						$key = 'note02';break;
+					case "ad_ads_display_url":
+						$key = 'display_url';break;
+					case "ad_ads_link_url":
+						$key = 'link_url';break;
+				}
+				$validated[$key] = $val;
+			}
+		}
+		Session::put('validated', $validated);
+
+		return Redirect::to('preview/');
 
 
 	}
@@ -233,7 +360,9 @@ var_dump($Key);exit;
 	}
 
 
-	public function validateFlg($target){
+	public function validateFlg(){
+		$posts = $_POST;
+		extract($posts);
 		$validator = Validator::make(
 			array('ad_ads_title' => $ad_ads_title,
 					'ad_ads_name' => $ad_ads_name,
@@ -245,13 +374,16 @@ var_dump($Key);exit;
 					'ad_ads_name' => 'required|max:50',
 					'ad_ads_note01' => 'required|max:19',
 					'ad_ads_note02' => 'required|max:19',
+					//'note02' => 'required|max:19',
 					'ad_ads_display_url' => 'required|max:29',
 					'ad_ads_link_url' => 'required|max:1024')
 	);
 		if($validator->fails())
 		{
 			$failed = $validator->failed();
+			return $failed;
 		}
+		return null;
 
 	}
 
