@@ -48,6 +48,7 @@ class CampaignController extends BaseController{
     * @param $keywords_id キーワードID
     * @param $ad_ads_id 広告ID
     * @param $err_msg エラーメッセージ
+	* @param $campaign_id エラーメッセージ
     */
 
     private $campaign_name;
@@ -78,6 +79,7 @@ class CampaignController extends BaseController{
     private $keywords_id = null;
     private $ad_ads_id = null;
     private $err_msg = null;
+	private $campaign_id = null;
 
     private $must = ['campaign_name', 'campaign_budget'];
 

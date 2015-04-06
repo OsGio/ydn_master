@@ -3,6 +3,10 @@
 @section('content')
 {{ Form::open(array('method' => 'post', 'url' => ' ')) }}
 <section class="col-sm-12">
+    <div class="page-header">
+        <h3><span class="label label-danger">Yahoo</span> SS - 広告グループ追加出稿</h3>
+    </div>
+
 		<strong style="color:red;">※印は全てテスト用の注釈です。</strong>
 	<div id="first" class="col-md-12 col-lg-12">
 
@@ -34,6 +38,12 @@
 					</div>
 				</fieldset>
 			</div>
+            <div class="form-group">
+                <label for="campaign_id" class="col-sm-4 control-label">キャンペーンID</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="campaign_id" name="campaign_id" placeholder="キャンペーンID" value="" required="">
+                </div>
+            </div>
 		</div>
 	</div><!-- /#campaign -->
 

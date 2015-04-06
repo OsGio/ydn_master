@@ -44,6 +44,7 @@ class SchemaController extends BaseController {
                     $table->increments('id');
                     $table->text('cam_name')->nullable();
                     $table->integer('cam_budget');
+                    $table->integer('campaign_id')->nullable();
                     $table->timestamps();
                     $table->timestamp('deleted_at');
 
@@ -59,6 +60,7 @@ class SchemaController extends BaseController {
                     $table->string('keyword', 255);
                     $table->text('match_type'); //カンマ区切りで保持
                     $table->text('encoded');
+                    $table->integer('campaign_id')->nullable();
                     $table->timestamps();
                     $table->timestamp('deleted_at');
                     $table->integer('cam_id');
@@ -74,6 +76,7 @@ class SchemaController extends BaseController {
                     $table->increments('id');
                     $table->string('adgroup', 255);
                     $table->integer('cost');
+                    $table->integer('campaign_id')->nullable();
                     $table->timestamps();
                     $table->timestamp('deleted_at');
                     $table->integer('cam_id');
@@ -93,6 +96,7 @@ class SchemaController extends BaseController {
                     $table->string('note02', 255);
                     $table->string('display_url', 255);
                     $table->string('link_url', 255);
+                    $table->integer('campaign_id')->nullable();
                     //$table->text('encoded_url', 255);
                     $table->timestamps();
                     $table->timestamp('deleted_at');

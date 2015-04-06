@@ -13,9 +13,9 @@
 <div class="navbar-collapse collapse">
 <ul class="nav navbar-nav">
 <li><a href="./">新規キャンペーン出稿</a></li>
-<li><a href="#">除外キーワード</a></li>
-<li><a href="#">広告グループ追加出稿</a></li>
-{{--<li><a href="#">広告追加出稿</a></li>--}}
+<li><a href="ex_keywords">除外キーワード</a></li>
+<li><a href="add_adgroup">広告グループ追加出稿</a></li>
+{{--<li><a href="add_adads">広告追加出稿</a></li>--}}
 <!--<li><a href="./contact">コンタクト</a></li>-->
 
 </ul>

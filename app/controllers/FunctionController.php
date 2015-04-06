@@ -96,10 +96,12 @@ var_dump($Key);exit;
 		$AdAds = new AdAds;
 		$Title = new Title;
 
+		$campaign_id = null;
 		extract($posts);
 		// キャンペーンsave
 		$Campaign->cam_name = $campaign_name;
 		$Campaign->cam_budget = $campaign_budget;
+		$Campaign->campaign_id = $campaign_id;
 		$Campaign->save();
 
 		$cam_id = $Campaign->max('id');
@@ -132,6 +134,7 @@ var_dump($Key);exit;
 				$Keyword_c->encoded = $encoded[$i];
 				$Keyword_c->match_type = $matches;
 				$Keyword_c->cam_id = $cam_id;
+				$Keyword_c->campaign_id = $campaign_id;
 				$Keyword_c->save();
 
 				$key_id = $Keyword_c->id;
@@ -144,6 +147,7 @@ var_dump($Key);exit;
 				$AdGroup_c->adgroup = $keywords[$i];
 				$AdGroup_c->cost = $ad_group_cost;
 				$AdGroup_c->cam_id = $cam_id;
+				$AdGroup_c->campaign_id = $campaign_id;
 				$AdGroup_c->save();
 
 				$adg_id = $AdGroup_c->id;
@@ -267,6 +271,7 @@ var_dump($Key);exit;
 			$AdAds_c->display_url = $ad_ads_display_url;
 			$AdAds_c->link_url = $ad_ads_link_url;
 			$AdAds_c->cam_id = $cam_id;
+			$AdAds_c->campaign_id = $campaign_id;
 			$AdAds_c->save();
 
 			$cnt++;
@@ -318,8 +323,15 @@ var_dump($Key);exit;
 				}
 				$validated[$key] = $val;
 			}
+			Session::put('validated', $validated);
 		}
-		Session::put('validated', $validated);
+		else
+		{
+			Session::put('validated', null);
+		}
+
+		//プレビュータイプ判別用
+		Session::put('exec', 1);
 
 		return Redirect::to('preview/');
 
@@ -388,9 +400,59 @@ var_dump($Key);exit;
 	}
 
 
-	public function getExceptsKeywords()
+	public function postExKeywords()
 	{
-		return View::make('excepts_keywords');
+		$posts = $_POST;
+
+		$Ex = new stdClass();
+
+		extract($posts);
+
+		//除外キーワードタイプ(=コンポーネントの種類)
+		switch($ex_keyword_pattern)
+		{
+			case 'c':
+			$Ex->ex_pattern = 'キャンペーンの対象外キーワード';break;
+			case 'a':
+			$Ex->ex_pattern = '広告グループの対象外キーワード';break;
+		}
+
+		//キャンペーンID
+		$Ex->cam_id = $campaign_id;
+
+		//キャンペーン名
+		$Ex->cam_name = $campaign_name;
+
+		//キーワードsave & 広告グループsave
+		//match_typeをテキストに
+		//$matches = implode(',', $match_type);
+		foreach($match_type as $m)
+		{
+			switch($m)
+			{
+				case 'exact':
+				$m = "完全一致";break;
+				case 'phrase':
+				$m = "フレーズ一致";break;
+				case 'broad_plus':
+				$m = "絞り込み部分一致";break;
+				case 'broad':
+				$m = "部分一致";break;
+			}
+			$matches[] = $m;
+		}
+		$Ex->match_type = $matches;
+
+		//改行コードを統一後配列化
+		$order   = "/\r\n||\n||\r/";
+		$keyword = str_replace($order, "\r\n", $keyword);
+		$keywords = explode("\r\n", $keyword);
+		$Ex->keywords = $keywords;
+
+		Session::put('exec', 2);
+//var_dump($Ex);exit;
+		return View::make('preview')->with('Ex', $Ex)->with('header', $this->csv_header);
+
 	}
 
 	public function getAdsGroup()

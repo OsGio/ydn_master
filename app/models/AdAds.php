@@ -25,7 +25,7 @@ class AdAds extends Eloquent{
     public $ad_ads_type = "テキスト（15・19-19）";
     public $career = null;
     public $priority_device = null;
-    public $campaign_id = null;
+    //public $campaign_id = null;
     public $ad_group_id = null;
     public $keywords_id = null;
     public $ad_ads_id = null;

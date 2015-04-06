@@ -26,19 +26,19 @@ class PageController extends BaseController {
 		return View::make('index');
 	}
 
-	public function getExceptsKeywords()
+	public function getExKeywords()
 	{
 		return View::make('excepts_keywords');
 	}
 
-	public function getAdsGroup()
+	public function getAddAdgroup()
 	{
-		return View::make('ads_group');
+		return View::make('add_adgroup');
 	}
 
 	public function getAddAds()
 	{
-		return View::make('add_ads');
+		return View::make('add_adads');
 	}
 
 	public function getPreview()

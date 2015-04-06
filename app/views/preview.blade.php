@@ -10,11 +10,13 @@
 <html lang="ja"> -->
 <div id="preview">
 
-<table class="table table-bordered table-condensed">
+<table class="table table-bordered table-condensed index">
 {{Form::open(array('url' => '/saved'))}}
 <thead>
     <tr>{{HTML::header($header)}}</tr>
 </thead>
+
+@if(Session::get('exec')==1)
 <tbody>
 {{HTML::all($Campaign)}}
     @foreach($match_type as $m)
@@ -41,6 +43,22 @@
 @endforeach
 
 </tbody>
+@endif
+
+@if(Session::get('exec')==2)
+<tbody>
+    @foreach($Ex->match_type as $m)
+
+        @for($i=0; $i < count($Ex->keywords); $i++)
+
+        {{HTML::ex_keywords($Ex, $m, $i)}}
+
+        @endfor
+
+    @endforeach
+</tbody>
+@endif
+
 </div>
 {{--Session::get('valid')--}}
 </table>

@@ -25,7 +25,7 @@ class AdGroup extends Eloquent{
     public $ad_ads_type = null;
     public $career = null;
     public $priority_device = null;
-    public $campaign_id = null;
+    //public $campaign_id;
     public $ad_group_id = null;
     public $keywords_id = null;
     public $ad_ads_id = null;

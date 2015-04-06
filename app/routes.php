@@ -44,6 +44,10 @@ Route::post('/add_ads', 'FunctionController@postAddAds');
 Route::get('/', 'PageController@getIndex');
 Route::post('/', 'FunctionController@postIndex');
 Route::get('/preview', 'PageController@getPreview');
+Route::get('/ex_keywords', 'PageController@getExKeywords');
+Route::post('/ex_keywords', 'FunctionController@postExKeywords');
+Route::get('/add_adgroup', 'PageController@getAddAdgroup');
+//Route::get('/add_adgroup', 'PageController@getAddAdads');
 
 
 

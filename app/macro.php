@@ -123,7 +123,8 @@
 
     HTML::macro('all', function($obj)
     {
-        $err = array_keys(Session::get('validated'));
+        $err = (is_array(Session::get('validated'))) ? array_keys(Session::get('validated')) : null ;
+        //$err = array_keys(Session::get('validated'));
         $tds = '';
         foreach($obj->keys as $k)
         {
@@ -197,7 +198,17 @@
         return $trs;
     });
 
+    HTML::macro('ex_keywords', function($obj, $m, $i)
+    {
+        $key = $obj->keywords[$i];
+//        var_dump($obj);exit;
+        $tr = "<tr><td>$obj->cam_name</td><td></td><td>$obj->ex_pattern</td><td></td><td></td><td>$m</td><td>$key</td><td></td>
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>PC|モバイル|スマートフォン|タブレット</td><td></td>
+                <td></td><td></td><td></td><td></td><td>$obj->cam_id</td><td></td><td></td><td></td><td></td></tr>";
 
+        return $tr;
+
+    });
 
 
 
