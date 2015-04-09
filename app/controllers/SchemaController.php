@@ -59,7 +59,7 @@ class SchemaController extends BaseController {
                     $table->increments('id');
                     $table->string('keyword', 255);
                     $table->text('match_type'); //カンマ区切りで保持
-                    $table->text('encoded');
+                    $table->text('encoded')->nullable();
                     $table->integer('campaign_id')->nullable();
                     $table->timestamps();
                     $table->timestamp('deleted_at');

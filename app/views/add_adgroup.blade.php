@@ -119,6 +119,7 @@
 								</td>
 							</tr>
 							<tr>
+                        {{--
 								<td class="col-sm-4">
 									<div class="form-inline">
 										<div class="checkbox">
@@ -136,6 +137,7 @@
 										</div>
 									</div>
 								</td>
+                        --}}
 							<!-- </tr>
 							<tr> -->
 								<td class="col-sm-4">
@@ -620,6 +622,15 @@ function validator($input){
 	}
 }
 
+function deleteForm(){
+	var forms = $(this).parent('div.forms');
+	var tb = $(this).closest('tbody');
+	if(tb.find('div.forms').length > 1){
+		forms.slideUp();
+		forms.remove();
+	}
+}
+
 
 $(function(){
 
@@ -660,12 +671,17 @@ console.log($(this).val().length);
 		}
 		else if($(this).data('id')=='phrase'){
 			var tb = $(this).closest('thead').next('tbody');
-			var d_id = tb.children().filter('tr:last').data('id');
-			var class_name = tb.children('tr').find('td').attr('class');
+			var forms = $('#tab3 > .forms').last();
+			forms = forms.clone(true);
 
-			var newtr = tb.children().filter('tr:last').clone(true);
-			newtr = newtr.data('tr', 'id', (d_id+1));
-			newtr.appendTo(tb);
+			$('#tab3').append(forms);
+
+			// var d_id = tb.children().filter('tr:last').data('id');
+			// var class_name = tb.children('tr').find('td').attr('class');
+			//
+			// var newtr = tb.children().filter('tr:last').clone(true);
+			// newtr = newtr.data('tr', 'id', (d_id+1));
+			// newtr.appendTo(tb);
 		}
 	});
 
@@ -678,6 +694,18 @@ console.log($(this).val().length);
 			forms.remove();
 		}
 	});
+	$('tbody.ad_ads_titles').on('click', 'span', function(){
+		var forms = $(this).parent('div.forms');
+		var td = forms.parent();
+		var tr = td.parent();
+		var tb = $(this).closest('tbody');
+		if(tb.find('div.forms').length > 1){
+			tr.slideUp();
+			tr.remove();
+		}
+	});
+
+
 
 	//function resetForm()
 	$('span#reset').on('click', function(){
@@ -742,7 +770,8 @@ console.log($(this).val().length);
 			T.wrap(function(index){
 				return '<td colspan="3"><div class="forms"></div></td>';
 			});
-			$('<span class="del_btn btn btn-danger btn-sm" onClick="deleteForm();">x</span>').insertAfter(T);
+			//$('<span class="del_btn btn btn-danger btn-sm" onClick="deleteForm();">x</span>').insertAfter(T);
+			$('<span class="del_btn btn btn-danger btn-sm">x</span>').insertAfter(T);
 			//$(TT+' > div.forms').append('<span class="del_btn btn btn-danger btn-sm">x</span>');
 			N.wrap(function(){
 				return '<td>'+titles[i].length+'</td>';
@@ -760,7 +789,6 @@ console.log($(this).val().length);
 		var k3 = toArray($('#keys3').val());
 		var broad = $('input[name^="isbroad"]:checked');
 		//var match = $('input[name^="match_type"]:checked');
-console.log(broad);
 // 		match.each(function(){
 // 			flugs.push($(this)).val();
 // 		});

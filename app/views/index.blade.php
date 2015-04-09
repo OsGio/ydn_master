@@ -109,6 +109,7 @@
 								</td>
 							</tr>
 							<tr>
+					{{--
 								<td class="col-sm-4">
 									<div class="form-inline">
 										<div class="checkbox">
@@ -126,6 +127,7 @@
 										</div>
 									</div>
 								</td>
+					--}}
 							<!-- </tr>
 							<tr> -->
 								<td class="col-sm-4">
@@ -250,11 +252,6 @@
 									</thead>
 									<tbody>
 										<tr>
-								{{--
-											<td class="ad_ads_title_word">{{Form::text('ad_ads_title_word[]', '', array('class' => 'ad_ads_title_word', 'data-role' => 'word'))}}</td>
-											<td class="title_word_num"></td>{{Form::hidden('title_word_num[]', '0', array('class' => 'title_word_num', 'data-role' => 'word'))}}
-											<td><span class="btn btn-sm btn-danger del_btn" data-id="word">x</span></td>
-								--}}
 											<td>
 												<div id="title_word_tab" class="tab-content">
 													<div class="tab-pane fade in active" id="tab1">
@@ -282,9 +279,6 @@
 									</thead>
 									<tbody>
 										<tr>
-									{{--
-											<td class="ad_ads_title_phrase">{{Form::text('ad_ads_title_phrase[]', '', array('class' => 'as_ads_title counted', 'id' => 'phrase', 'data-role' => 'phrase'))}}</td><td class="title_phrase_num"></td>{{Form::hidden('title_phrase_num[]', '0', array('class' => 'title_phrase_num'))}}
-									--}}
 											<td>
 												<div id="tab3">
 													<div class="forms">
@@ -610,6 +604,15 @@ function validator($input){
 	}
 }
 
+function deleteForm(){
+	var forms = $(this).parent('div.forms');
+	var tb = $(this).closest('tbody');
+	if(tb.find('div.forms').length > 1){
+		forms.slideUp();
+		forms.remove();
+	}
+}
+
 
 $(function(){
 
@@ -650,12 +653,17 @@ console.log($(this).val().length);
 		}
 		else if($(this).data('id')=='phrase'){
 			var tb = $(this).closest('thead').next('tbody');
-			var d_id = tb.children().filter('tr:last').data('id');
-			var class_name = tb.children('tr').find('td').attr('class');
+			var forms = $('#tab3 > .forms').last();
+			forms = forms.clone(true);
 
-			var newtr = tb.children().filter('tr:last').clone(true);
-			newtr = newtr.data('tr', 'id', (d_id+1));
-			newtr.appendTo(tb);
+			$('#tab3').append(forms);
+
+			// var d_id = tb.children().filter('tr:last').data('id');
+			// var class_name = tb.children('tr').find('td').attr('class');
+			//
+			// var newtr = tb.children().filter('tr:last').clone(true);
+			// newtr = newtr.data('tr', 'id', (d_id+1));
+			// newtr.appendTo(tb);
 		}
 	});
 
@@ -668,6 +676,18 @@ console.log($(this).val().length);
 			forms.remove();
 		}
 	});
+	$('tbody.ad_ads_titles').on('click', 'span', function(){
+		var forms = $(this).parent('div.forms');
+		var td = forms.parent();
+		var tr = td.parent();
+		var tb = $(this).closest('tbody');
+		if(tb.find('div.forms').length > 1){
+			tr.slideUp();
+			tr.remove();
+		}
+	});
+
+
 
 	//function resetForm()
 	$('span#reset').on('click', function(){
@@ -732,7 +752,8 @@ console.log($(this).val().length);
 			T.wrap(function(index){
 				return '<td colspan="3"><div class="forms"></div></td>';
 			});
-			$('<span class="del_btn btn btn-danger btn-sm" onClick="deleteForm();">x</span>').insertAfter(T);
+			//$('<span class="del_btn btn btn-danger btn-sm" onClick="deleteForm();">x</span>').insertAfter(T);
+			$('<span class="del_btn btn btn-danger btn-sm">x</span>').insertAfter(T);
 			//$(TT+' > div.forms').append('<span class="del_btn btn btn-danger btn-sm">x</span>');
 			N.wrap(function(){
 				return '<td>'+titles[i].length+'</td>';

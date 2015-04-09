@@ -115,8 +115,36 @@ var_dump($Key);exit;
 		$encoded_url = str_replace($order, "\r\n", $encoded_url);
 		$keywords = explode("\r\n", $keyword);
 		$encoded = explode("\r\n", $encoded_url);
-		//キーワードとエンコードURLを対に
-		if(count($keywords)==count($encoded))
+		//エンコードの有無をチェクしキーワードとエンコードURLを対に
+		if(implode('', $encoded)=='')
+		{
+			for($i=0; $i<count($keywords); $i++)
+			{
+				$Keyword_c = clone($Keyword);
+				$Keyword_c->keyword = $keywords[$i];
+				$Keyword_c->encoded = null;
+				$Keyword_c->match_type = $matches;
+				$Keyword_c->cam_id = $cam_id;
+				$Keyword_c->campaign_id = $campaign_id;
+				$Keyword_c->save();
+
+				$key_id = $Keyword_c->id;
+
+				$AdGroup_c = clone($AdGroup);
+				if(preg_match('/\+/', $keywords[$i]))
+				{
+					$keywords[$i] = str_replace('+', '', $keywords[$i]);
+				}
+				$AdGroup_c->adgroup = $keywords[$i];
+				$AdGroup_c->cost = $ad_group_cost;
+				$AdGroup_c->cam_id = $cam_id;
+				$AdGroup_c->campaign_id = $campaign_id;
+				$AdGroup_c->save();
+
+				$adg_id = $AdGroup_c->id;
+			}
+		}
+		elseif(count($keywords)==count($encoded))
 		{
 			for($i=0; $i<count($keywords); $i++)
 			{
@@ -180,10 +208,19 @@ var_dump($Key);exit;
 		}
 */
 		//タイトルsave
+		//一括登録の場合の配列化
+		foreach($ad_ads_title_word as $word)
+		{
+			$word = str_replace($order, '\r\n', $word);
+			$word = explode("\r\n", $word);
+			$words[] = $word;
+		}
+		$ad_ads_title_word = array_flatten($words);
+
 		//空の値を除去
-		$ad_ads_title_word = array_filter($ad_ads_title_word, function($val){
-			return $val;
-		});
+		// $ad_ads_title_word = array_filter($ad_ads_title_word, function($val){
+		// 	return $val;
+		// });
 
 		$cnt = 1;
 		foreach($ad_ads_title_phrase as $p)
@@ -241,11 +278,15 @@ var_dump($Key);exit;
 			if(preg_match("/\{\{WORD\}\}/", $ad_ads_note01))
 			{
 				$word = Title::where('cam_id', '=', $cam_id)->where('adads_id', '=', $cnt)->first();
-				$ad_ads_replace01 = str_replace('{{WORD}}', $word->word, $ad_ads_note01);
-				$AdAds_c->note01 = $ad_ads_replace01;
-				if($word->word=="0")
+				$word = $word->word;
+				if($word == "0")
 				{
 					$ad_ads_replace01 = str_replace('{{WORD}}', '', $ad_ads_note01);
+					$AdAds_c->note01 = $ad_ads_replace01;
+				}
+				else
+				{
+					$ad_ads_replace01 = str_replace('{{WORD}}', $word, $ad_ads_note01);
 					$AdAds_c->note01 = $ad_ads_replace01;
 				}
 			}
@@ -256,11 +297,15 @@ var_dump($Key);exit;
 			if(preg_match("/\{\{WORD\}\}/", $ad_ads_note02))
 			{
 				$word = Title::where('cam_id', '=', $cam_id)->where('adads_id', '=', $cnt)->first();
-				$ad_ads_replace02 = str_replace('{{WORD}}', $word->word, $ad_ads_note02);
-				$AdAds_c->note02 = $ad_ads_replace02;
-				if($word->word=="0")
+				$word = $word->word;
+				if($word =="0")
 				{
 					$ad_ads_replace02 = str_replace('{{WORD}}', '', $ad_ads_note02);
+					$AdAds_c->note02 = $ad_ads_replace02;
+				}
+				else
+				{
+					$ad_ads_replace02 = str_replace('{{WORD}}', $word, $ad_ads_note02);
 					$AdAds_c->note02 = $ad_ads_replace02;
 				}
 			}

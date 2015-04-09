@@ -54,6 +54,8 @@ Route::get('/add_adgroup', 'PageController@getAddAdgroup');
 Route::any('/csv', 'FunctionController@postCsv');
 
 
+Route::get('/login', 'LoginController@index');
+
 // Making Schema
 Route::get('create/{table_name}', 'SchemaController@create');
 Route::get('delete/{table_name}', 'SchemaController@delete');

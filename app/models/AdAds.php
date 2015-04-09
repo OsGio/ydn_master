@@ -84,7 +84,14 @@ class AdAds extends Eloquent{
 
 	public function setEncoded($Keyword)
 	{
-		$this->ad_ads_link_url = $this->link_url. '?' .$Keyword->encoded;
+		if($Keyword->encoded)
+		{
+			$this->ad_ads_link_url = $this->link_url. '?k=' .$Keyword->encoded;
+		}
+		elseif(!$Keyword->encoded)
+		{
+			$this->ad_ads_link_url = $this->link_url;			
+		}
 	}
 
 }
