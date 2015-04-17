@@ -4,10 +4,10 @@
 {{ Form::open(array('method' => 'post', 'url' => ' ')) }}
 <section class="col-sm-12">
     <div class="page-header">
-        <h3><span class="label label-danger">Yahoo</span> SS - 広告グループ追加出稿</h3>
+        <h3>広告グループ追加出稿</h3>
     </div>
 
-		<strong style="color:red;">※印は全てテスト用の注釈です。</strong>
+		<strong style="color:red;"></strong>
 	<div id="first" class="col-md-12 col-lg-12">
 
 	<div id="campaign" class="panel panel-default col-sm-5">
@@ -77,89 +77,91 @@
 				<div id="keyword_config" class="panel panel-default col-sm-12">
 					<div class="panel-heading">マッチタイプ設定<strong style="color:red;"></strong></div>
 					<div class="panel-body">
-					<table class="table table-bordered">
-						<tbody>
-							<tr>
-								<th class="col-sm-4 text-right" rowspan="4">マッチタイプ / 表示URL接尾辞</th>
-								<td class="col-sm-4">
-									<div class="form-inline">
-										<div class="checkbox">
-											<label class="matchtype_label">
-												<input type="checkbox" name="match_type[]" value="exact" checked="checked">
-												完全一致
-											</label>
-										</div>
-										<br>
-										<div class="form-group">
-											<div class="input-group">
-												<span class="input-group-addon">.</span>
-												<input type="text" class="form-control matchtype_suffix" name="exact_suffix" value="jp">
-											</div>
-										</div>
-									</div>
-								</td>
-							<!-- </tr>
-							<tr> -->
-								<td class="col-sm-4">
-									<div class="form-inline">
-										<div class="checkbox">
-											<label class="matchtype_label">
-												<input type="checkbox" name="match_type[]" value="phrase">
-												フレーズ一致
-											</label>
-										</div>
-										<br>
-										<div class="form-group">
-											<div class="input-group">
-												<span class="input-group-addon">.</span>
-												<input type="text" class="form-control matchtype_suffix" name="exact_suffix" value="co.jp">
-											</div>
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-                        {{--
-								<td class="col-sm-4">
-									<div class="form-inline">
-										<div class="checkbox">
-											<label class="matchtype_label">
-												<input type="checkbox" name="match_type[]" value="broad_plus">
-												絞り込み部分一致
-											</label>
-										</div>
-										<br>
-										<div class="form-group">
-											<div class="input-group">
-												<span class="input-group-addon">.</span>
-												<input type="text" class="form-control matchtype_suffix" name="phrase_suffix" value="co.jp">
-											</div>
-										</div>
-									</div>
-								</td>
-                        --}}
-							<!-- </tr>
-							<tr> -->
-								<td class="col-sm-4">
-									<div class="form-inline">
-										<div class="checkbox">
-											<label class="matchtype_label">
-												<input type="checkbox" name="match_type[]" value="broad">
-												部分一致
-											</label>
-										</div>
-										<br>
-										<div class="form-group">
-											<div class="input-group">
-												<span class="input-group-addon">.</span>
-												<input type="text" class="form-control matchtype_suffix" name="broad_suffix" value="jp">
-											</div>
-										</div>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+                        <table class="table table-bordered">
+    						<tbody>
+    							<tr>
+    								<th class="col-sm-12 text-left" colspan="3">マッチタイプ / 表示URL接尾辞</th>
+    							</tr>
+    							<tr>
+    								<td class="col-sm-4">
+    									<div class="form-inline">
+    										<div class="checkbox">
+    											<label class="matchtype_label">
+    												<input type="checkbox" name="match_type[]" value="exact" checked="checked">
+    												完全一致
+    											</label>
+    										</div>
+    										<br>
+    										<div class="form-group">
+    											<div class="input-group">
+    												<span class="input-group-addon">.</span>
+    												<input type="text" class="form-control matchtype_suffix" name="exact_suffix" value="jp">
+    											</div>
+    										</div>
+    									</div>
+    								</td>
+    							<!-- </tr>
+    							<tr> -->
+    								<td class="col-sm-4">
+    									<div class="form-inline">
+    										<div class="checkbox">
+    											<label class="matchtype_label">
+    												<input type="checkbox" name="match_type[]" value="phrase">
+    												フレーズ一致
+    											</label>
+    										</div>
+    										<br>
+    										<div class="form-group">
+    											<div class="input-group">
+    												<span class="input-group-addon">.</span>
+    												<input type="text" class="form-control matchtype_suffix" name="exact_suffix" value="co.jp">
+    											</div>
+    										</div>
+    									</div>
+    								</td>
+    							<!-- </tr>
+    							<tr> -->
+    					{{--
+    								<td class="col-sm-4">
+    									<div class="form-inline">
+    										<div class="checkbox">
+    											<label class="matchtype_label">
+    												<input type="checkbox" name="match_type[]" value="broad_plus">
+    												絞り込み部分一致
+    											</label>
+    										</div>
+    										<br>
+    										<div class="form-group">
+    											<div class="input-group">
+    												<span class="input-group-addon">.</span>
+    												<input type="text" class="form-control matchtype_suffix" name="phrase_suffix" value="co.jp">
+    											</div>
+    										</div>
+    									</div>
+    								</td>
+    					--}}
+    							<!-- </tr>
+    							<tr> -->
+    								<td class="col-sm-4">
+    									<div class="form-inline">
+    										<div class="checkbox">
+    											<label class="matchtype_label">
+    												<input type="checkbox" name="match_type[]" value="broad">
+    												部分一致
+    											</label>
+    										</div>
+    										<br>
+    										<div class="form-group">
+    											<div class="input-group">
+    												<span class="input-group-addon">.</span>
+    												<input type="text" class="form-control matchtype_suffix" name="broad_suffix" value="jp">
+    											</div>
+    										</div>
+    									</div>
+    								</td>
+    							</tr>
+    						</tbody>
+    					</table>
 					</div>
 				</div><!-- /#keyword_config -->
 
@@ -243,8 +245,7 @@
 			<div class="col-sm-12">
 				<div id="title_generator" class="panel panel-default">
 					<div class="panel-heading">
-						広告タイトルパターン生成<strong style="color:red;">※タイトルフレーズの挿入したい箇所に@{{WORD}}と入力してください。<br><b>必ず広告タイトル生成ボタンを押して広告タイトルを出力してください。</b><br>
-													</strong>
+						広告タイトルパターン生成<strong style="color:red;">※タイトルフレーズの挿入したい箇所に@{{WORD}}と入力してください。</strong>
 													<span class="btn btn-info btn-sm ins_btn">@{{WORD}}</span><span>挿入ボタン</span>
 					</div>
 					<div class="panel-body">
@@ -336,8 +337,7 @@
 		<div class="col-sm-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					広告追加<strong style="color:red;">※広告追加機能未。広告名/説明文１/説明文２ ともに@{{WORD}}置換可能。<br>
-														@{{WORD}}挿入ワンクリックボタン実装中。</strong>
+					広告追加<strong style="color:red;">@{{WORD}}挿入ボタン実装中。</strong>
 														<span class="btn btn-info btn-sm ins_btn">@{{WORD}}</span><span>挿入ボタン</span>
 				</div>
 				<div class="panel-body">
@@ -386,9 +386,11 @@
 							</div>
 						</div>
 					</fieldset>
+                {{--
 					<div class="col-sm-offset-4 col-sm-8">
 						<button id="add_ads_btn" class="btn btn-primary" type="button" name="ad_ads_data">広告追加</button>
 					</div>
+                --}}
 					<script>
 						ads_data_list = [];
 					</script>
@@ -634,6 +636,9 @@ function deleteForm(){
 
 $(function(){
 
+	var ins_id;
+	var cnt = 0;
+
 	//function setCount()
 	$('input.counted, textarea.counted').on('bind keyup', function(){
 console.log($(this).val().length);
@@ -646,6 +651,15 @@ console.log($(this).val().length);
 		var num = $(this).val().length;
 		$(this).closest('td').next().text(num);
 		$(this).closest('tr').find('input:hidden').val(num);
+	});
+
+	//function insBtn
+	$('input').on('focus', function(){
+		ins_id = $(this).attr('id');
+	});
+	$('span.ins_btn').on('click', function(e){
+		e.preventDefault();
+		$('input[id="'+ins_id+'"]').selection('replace', {text: '\{\{WORD\}\}'});
 	});
 
 
@@ -662,6 +676,7 @@ console.log($(this).val().length);
 	});
 */
 	$('#third #title_generator p.add_btn').on('click', function(){
+		cnt++;
 		if($(this).data('id')=='word'){
 			var tb = $(this).closest('thead').next('tbody');
 			var forms = $('#tab1 > .forms').last();
@@ -673,6 +688,7 @@ console.log($(this).val().length);
 			var tb = $(this).closest('thead').next('tbody');
 			var forms = $('#tab3 > .forms').last();
 			forms = forms.clone(true);
+			forms.find('input').attr('id', 'ad_ads_title_phrase'+cnt);
 
 			$('#tab3').append(forms);
 
@@ -734,14 +750,23 @@ console.log($(this).val().length);
 	$('#third #title_generator p#generate').on('click', function(){
 		//for Input:Text
 		var word = []; var phrase = [];
-		$('input[name^="ad_ads_title_word"]').each(function(){
-			word.push($(this).val());
-			validator($(this));
-		});
+		if($('li.active > a').attr('href')=='#tab1'){
+			$('input[name^="ad_ads_title_word"]:text').each(function(){
+				word.push($(this).val());
+				validator($(this));
+			});
+			var title = word;
+		}else{
+			// $('textarea[name^="ad_ads_title_word"]').each(function(){
+			// 	word.push($(this).val());
+			// 	validator($(this));
+			// });
+
 		//for Textarea
 		var txt = $('#ad_ads_title_text').val();
 		txt = toArray(txt);
 		var title = $.merge(word, txt);
+		}
 
 		$('input[name^="ad_ads_title_phrase"]').each(function(){
 			phrase.push($(this).val());
@@ -789,6 +814,7 @@ console.log($(this).val().length);
 		var k3 = toArray($('#keys3').val());
 		var broad = $('input[name^="isbroad"]:checked');
 		//var match = $('input[name^="match_type"]:checked');
+console.log(broad);
 // 		match.each(function(){
 // 			flugs.push($(this)).val();
 // 		});

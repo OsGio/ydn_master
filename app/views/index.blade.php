@@ -3,7 +3,10 @@
 @section('content')
 {{ Form::open(array('method' => 'post', 'url' => ' ')) }}
 <section class="col-sm-12">
-		<strong style="color:red;">※印は全てテスト用の注釈です。</strong>
+	<div class="page-header">
+        <h3>新規キャンペーン出稿</h3>
+    </div>
+		<strong style="color:red;"></strong>
 	<div id="first" class="col-md-12 col-lg-12">
 
 	<div id="campaign" class="panel panel-default col-sm-5">
@@ -70,7 +73,9 @@
 					<table class="table table-bordered">
 						<tbody>
 							<tr>
-								<th class="col-sm-4 text-right" rowspan="4">マッチタイプ / 表示URL接尾辞</th>
+								<th class="col-sm-12 text-left" colspan="3">マッチタイプ / 表示URL接尾辞</th>
+							</tr>
+							<tr>
 								<td class="col-sm-4">
 									<div class="form-inline">
 										<div class="checkbox">
@@ -107,8 +112,8 @@
 										</div>
 									</div>
 								</td>
-							</tr>
-							<tr>
+							<!-- </tr>
+							<tr> -->
 					{{--
 								<td class="col-sm-4">
 									<div class="form-inline">
@@ -233,9 +238,8 @@
 			<div class="col-sm-12">
 				<div id="title_generator" class="panel panel-default">
 					<div class="panel-heading">
-						広告タイトルパターン生成<strong style="color:red;">※タイトルフレーズの挿入したい箇所に@{{WORD}}と入力してください。<br><b>必ず広告タイトル生成ボタンを押して広告タイトルを出力してください。</b><br>
-													</strong>
-													<span class="btn btn-info btn-sm ins_btn">@{{WORD}}</span><span>挿入ボタン</span>
+						広告タイトルパターン生成
+							<span class="btn btn-info btn-sm ins_btn">@{{WORD}}</span><span>挿入ボタン</span>
 					</div>
 					<div class="panel-body">
 						<div class="col-sm-12">
@@ -282,7 +286,7 @@
 											<td>
 												<div id="tab3">
 													<div class="forms">
-														{{Form::text('ad_ads_title_phrase[]', '', array('class' => 'ad_ads_title_phrase form-control counted', 'data-role' => 'phrase'))}}
+														{{Form::text('ad_ads_title_phrase[]', '', array('id' => 'ad_ads_title_phrase', 'class' => 'ad_ads_title_phrase form-control counted', 'data-role' => 'phrase'))}}
 														<span><span class="count">0</span>/15</span><span class="del_btn btn btn-sm btn-danger"><b>x</b></span>
 														{{Form::hidden('title_phrase_num[]', '0', array('class' => 'title_phrase_num', 'data-role' => 'phrase'))}}
 													</div>
@@ -318,9 +322,9 @@
 		<div class="col-sm-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					広告追加<strong style="color:red;">※広告追加機能未。広告名/説明文１/説明文２ ともに@{{WORD}}置換可能。<br>
-														@{{WORD}}挿入ワンクリックボタン実装中。</strong>
-														<span class="btn btn-info btn-sm ins_btn">@{{WORD}}</span><span>挿入ボタン</span>
+					広告追加
+						{{Form::button('+', array('class' => 'btn btn-sm btn-primary ads_plus'))}}
+						<span class="btn btn-info btn-sm ins_btn">@{{WORD}}</span><span>挿入ボタン</span>
 				</div>
 				<div class="panel-body">
 					<fieldset class="form-horizontal ad_ads_field">
@@ -341,13 +345,13 @@
 						<div class="form-group">
 							<label class="control-label col-sm-4">説明文1</label>
 							<div class="col-sm-8">
-								<div class="input-group"><input class="form-control counted" type="text" name="ad_ads_note01" data-max-input-length="19" data-change-insertion="true" data-check-text="yss"><span class="input-group-addon"><span class="count">0</span>/19</span></div><span class="help_nomargin"></span>
+								<div class="input-group"><input id="ad_ads_note01" class="form-control counted" type="text" name="ad_ads_note01" data-max-input-length="19" data-change-insertion="true" data-check-text="yss"><span class="input-group-addon"><span class="count">0</span>/19</span></div><span class="help_nomargin"></span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-sm-4">説明文2</label>
 							<div class="col-sm-8">
-								<div class="input-group"><input class="form-control counted" type="text" name="ad_ads_note02" data-max-input-length="19" data-change-insertion="true" data-check-text="yss"><span class="input-group-addon"><span class="count">0</span>/19</span></div><span class="help_nomargin"></span>
+								<div class="input-group"><input id="ad_ads_note02" class="form-control counted" type="text" name="ad_ads_note02" data-max-input-length="19" data-change-insertion="true" data-check-text="yss"><span class="input-group-addon"><span class="count">0</span>/19</span></div><span class="help_nomargin"></span>
 							</div>
 						</div>
 						<div class="form-group">
@@ -368,9 +372,11 @@
 							</div>
 						</div>
 					</fieldset>
+				{{--
 					<div class="col-sm-offset-4 col-sm-8">
 						<button id="add_ads_btn" class="btn btn-primary" type="button" name="ad_ads_data">広告追加</button>
 					</div>
+				--}}
 					<script>
 						ads_data_list = [];
 					</script>
@@ -616,6 +622,9 @@ function deleteForm(){
 
 $(function(){
 
+	var ins_id;
+	var cnt = 0;
+
 	//function setCount()
 	$('input.counted, textarea.counted').on('bind keyup', function(){
 console.log($(this).val().length);
@@ -628,6 +637,15 @@ console.log($(this).val().length);
 		var num = $(this).val().length;
 		$(this).closest('td').next().text(num);
 		$(this).closest('tr').find('input:hidden').val(num);
+	});
+
+	//function insBtn
+	$('input').on('focus', function(){
+		ins_id = $(this).attr('id');
+	});
+	$('span.ins_btn').on('click', function(e){
+		e.preventDefault();
+		$('input[id="'+ins_id+'"]').selection('replace', {text: '\{\{WORD\}\}'});
 	});
 
 
@@ -644,6 +662,7 @@ console.log($(this).val().length);
 	});
 */
 	$('#third #title_generator p.add_btn').on('click', function(){
+		cnt++;
 		if($(this).data('id')=='word'){
 			var tb = $(this).closest('thead').next('tbody');
 			var forms = $('#tab1 > .forms').last();
@@ -655,6 +674,7 @@ console.log($(this).val().length);
 			var tb = $(this).closest('thead').next('tbody');
 			var forms = $('#tab3 > .forms').last();
 			forms = forms.clone(true);
+			forms.find('input').attr('id', 'ad_ads_title_phrase'+cnt);
 
 			$('#tab3').append(forms);
 
@@ -716,14 +736,23 @@ console.log($(this).val().length);
 	$('#third #title_generator p#generate').on('click', function(){
 		//for Input:Text
 		var word = []; var phrase = [];
-		$('input[name^="ad_ads_title_word"]').each(function(){
-			word.push($(this).val());
-			validator($(this));
-		});
+		if($('li.active > a').attr('href')=='#tab1'){
+			$('input[name^="ad_ads_title_word"]:text').each(function(){
+				word.push($(this).val());
+				validator($(this));
+			});
+			var title = word;
+		}else{
+			// $('textarea[name^="ad_ads_title_word"]').each(function(){
+			// 	word.push($(this).val());
+			// 	validator($(this));
+			// });
+
 		//for Textarea
 		var txt = $('#ad_ads_title_text').val();
 		txt = toArray(txt);
 		var title = $.merge(word, txt);
+		}
 
 		$('input[name^="ad_ads_title_phrase"]').each(function(){
 			phrase.push($(this).val());
